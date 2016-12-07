@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/util 
+            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+    <!-- WORKSHOP -->
+    <bean id="WorkshopDAO" class="pl.wicia.projector.database.services.workshop.WorkshopDAO" scope="prototype">
+        <constructor-arg name="factory" ref="sessionFactory"/>
+    </bean>
+    <bean id="WorkshopService" class="pl.wicia.projector.database.services.workshop.WorkshopService" scope="prototype">
+        <constructor-arg name="dao" ref="WorkshopDAO"/>
+    </bean>
+    
+    <!-- PATTERNS -->
+    <bean id="PatternDAO" class="pl.wicia.projector.database.services.pattern.PatternDAO" scope="prototype">
+        <constructor-arg name="factory" ref="sessionFactory"/>
+    </bean>
+    <bean id="PatternService" class="pl.wicia.projector.database.services.pattern.PatternService" scope="prototype">
+        <constructor-arg name="dao" ref="PatternDAO"/>
+    </bean>
+    
+    <!-- ELEMENTS -->
+    <bean id="ElementDAO" class="pl.wicia.projector.database.services.elements.ElementDAO" scope="prototype">
+        <constructor-arg name="factory" ref="sessionFactory"/>
+    </bean>
+    <bean id="ElementService" class="pl.wicia.projector.database.services.elements.ElementService" scope="prototype">
+        <constructor-arg name="dao" ref="ElementDAO"/>
+    </bean>
+    
+    <!-- PROPS -->
+    <bean id="PropsDAO" class="pl.wicia.projector.database.services.props.PropsDAO" scope="prototype">
+        <constructor-arg name="factory" ref="sessionFactory"/>
+    </bean>
+    <bean id="PropsService" class="pl.wicia.projector.database.services.props.PropsService" scope="prototype">
+        <constructor-arg name="dao" ref="PropsDAO"/>
+    </bean>
+    
+    <!-- DESCRIPTIONS -->
+    <bean id="DescriptionDAO" class="pl.wicia.projector.database.services.descriptions.DescriptionDAO" scope="prototype">
+        <constructor-arg name="factory" ref="sessionFactory"/>
+    </bean>
+    <bean id="DescriptionService" class="pl.wicia.projector.database.services.descriptions.DescriptionService" scope="prototype">
+        <constructor-arg name="dao" ref="DescriptionDAO"/>
+    </bean>
+   
+</beans>

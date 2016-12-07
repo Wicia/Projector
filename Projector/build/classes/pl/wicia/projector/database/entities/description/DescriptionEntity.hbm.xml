@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+    <class name="pl.wicia.projector.database.entities.description.DescriptionEntity" 
+           table="TAB_DESCRIPTIONS">
+        <meta attribute="class-description">
+            This class contains definition of Descriptions Table.
+        </meta>
+        <id name="id" type="long" column="id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="element" class="pl.wicia.projector.database.entities.element.ElementEntity" fetch="select">
+            <column name="id_element" not-null="true" />
+        </many-to-one>
+        <property name="position" column="position" type="byte" not-null="true"/>
+        <property name="name" column="name" type="string" not-null="true"/>
+        <property name="text" column="text" type="string" not-null="false"/>
+    </class>
+   
+    <query name="findDescriptionByName">
+        FROM DescriptionEntity WHERE name = :name
+    </query>
+    
+    <query name="findDescriptionByID">
+        FROM DescriptionEntity WHERE id = :id
+    </query>
+   
+</hibernate-mapping>
