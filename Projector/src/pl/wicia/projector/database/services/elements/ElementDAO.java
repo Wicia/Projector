@@ -116,7 +116,7 @@ public class ElementDAO implements INameDAO<Long, ElementEntity> {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.persist(element);
+            session.save(element);
             tx.commit();
         } 
         catch (Exception ex) {

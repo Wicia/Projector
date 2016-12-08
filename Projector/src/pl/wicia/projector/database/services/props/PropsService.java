@@ -9,6 +9,7 @@ package pl.wicia.projector.database.services.props;
 import java.util.Collection;
 import java.util.List;
 import pl.wicia.projector.common.exceptions.ExceptionDuplicateEntity;
+import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.entities.props.PropEntity;
 import pl.wicia.projector.spring.contexts.ContextMain;
 
@@ -32,7 +33,6 @@ public class PropsService{
         this.dao = dao;
     }
     
-    //TODO Kiedy powinna być walidacja? tutaj czy na pozimie metody wywyłującej?
     public void addProps(PropEntity entity) 
             throws ExceptionDuplicateEntity, Exception{
         PropEntity dbEntity = this.dao.getByName(entity.getName());
@@ -44,19 +44,15 @@ public class PropsService{
         }
     }
     
-    public void addListProps(List<PropEntity> list){
-        this.dao.addCollection(list);
+    public void addPropsCollection(Collection<PropEntity> collection){
+        this.dao.addCollection(collection);
     }
     
-    public void deleteAll(long elementID){
-        
-    }
-    
-    public PropEntity getWorkshopByName(String name){
+    public PropEntity getPropByName(String name){
         return this.dao.getByName(name);
     }
     
-    public PropEntity getWorkshopByID(Long id){
+    public PropEntity getPropByID(Long id){
         return this.dao.get(id);
     }
     
@@ -64,15 +60,19 @@ public class PropsService{
         return this.dao.getAll();
     }
     
-    public void deleteWorkshop(PropEntity entity){
+    public void deleteProp(PropEntity entity){
         this.dao.delete(entity);
     }
     
-    public void updateWorkshop(PropEntity entity){
+    public void updateProp(PropEntity entity){
         this.dao.update(entity);
     }
     
     public void updatePropsCollection(Collection<PropEntity> collection){
         this.dao.updateCollection(collection);
+    }
+    
+    public void deletePropsCollection(Collection<PropEntity> collection){
+        this.dao.deleteCollection(collection);
     }
 }

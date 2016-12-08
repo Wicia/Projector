@@ -57,4 +57,12 @@ public class DescriptionService{
     public void updateCollectionDescriptions(Collection<DescriptionEntity> collection) {
         this.dao.updateCollection(collection);
     }
+    
+    public void deleteCollectionDescriptions(Collection<DescriptionEntity> collection){
+        this.dao.deleteCollection(collection);
+    }
+
+    public void addCollectionDescriptions(Collection<DescriptionEntity> collection) {
+        this.dao.addCollection(collection);
+    }
 }

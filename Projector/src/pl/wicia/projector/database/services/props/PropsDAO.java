@@ -6,6 +6,7 @@
 package pl.wicia.projector.database.services.props;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -49,7 +50,6 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
         return list;
     }
     
-    // TODO: Gdzie umieścić metody uzywajace named query?
     @Override
     public PropEntity getByName(String name){
         PropEntity entity = null;
@@ -142,7 +142,7 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.persist(element);
+            session.save(element);
             tx.commit();
         } 
         catch (Exception ex) {
@@ -163,13 +163,16 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            //TODO: dorobić obiekt BatchUpdater(index, size, session)
-            for(int number = 0 ; number < collection.size() ; number++){
-                session.persist(collection.iterator().next());
+            
+            Iterator<PropEntity> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.save(iterator.next());
                 if(number % 10 == 0){
                     session.flush();
                     session.clear();
                 }
+                number++;
             }
             
             tx.commit();
@@ -190,13 +193,45 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            //TODO: dorobić obiekt BatchUpdater(index, size, session)
-            for(int number = 0 ; number < collection.size() ; number++){
-                session.update(collection.iterator().next());
+            
+            Iterator<PropEntity> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.update(iterator.next());
                 if(number % 10 == 0){
                     session.flush();
                     session.clear();
                 }
+                number++;
+            }
+            
+            tx.commit();
+        }
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            throw ex;
+        } 
+        finally {
+            session.close();
+        }
+    }
+
+    public void deleteCollection(Collection<PropEntity> collection) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            
+            Iterator<PropEntity> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.delete(iterator.next());
+                if(number % 10 == 0){
+                    session.flush();
+                    session.clear();
+                }
+                number++;
             }
             
             tx.commit();

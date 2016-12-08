@@ -7,6 +7,7 @@ package pl.wicia.projector.main;
 
 import javax.swing.UIManager;
 import pl.wicia.projector.gui.windows.elements.WindowElements;
+import pl.wicia.projector.gui.windows.menu.WindowMenu;
 import pl.wicia.projector.spring.contexts.ContextMain;
 import pl.wicia.projector.spring.contexts.ContextSettings;
 
@@ -23,7 +24,7 @@ public class Main {
     public static void main(String[] args) {
         initContexts();
         loadLookAndFeel();
-        WindowElements.open(2L);
+        WindowMenu.open();
     }
     
     private static void loadLookAndFeel(){

@@ -15,13 +15,17 @@ package pl.wicia.projector.main;
 public class TASKS {
     
     private static class Critical{
+        //TODO: sprawdzić, czy w update Collection jest scrollable result + batch
         //TODO: Może do plików Entity zastosować wzorzec Dekorator?
-        //TODO: cascade=all <<< pobawić się tym przy okazji update'u
-        //TODO: dorobić mapowanie kolakcji do pozostałych klas entity
+        //TODO: dorobić mapowanie kolekcji do pozostałych klas entity
+        //TODO: stworzyć wrappery na obiekty entity
+        //TODO: dorobić obiekt BatchUpdater(index, size, session)
     }
     
     private static class Typical{
         //TODO: uzupełnić pliki Entity, o dodatkowe atrybuty w properties
         //TODO: dodać nazwy do każdych z okienek + odznaczyć opcję Resizeable
+        //TODO: Gdzie umieścić metody uzywajace named query?
+        //TODO: stworzyć obiekt z ustawieniami + zaimplementować go w cctorach okienek i miejsc, gdzie są tworzone
     }
 }

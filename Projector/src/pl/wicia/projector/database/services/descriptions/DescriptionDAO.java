@@ -6,6 +6,7 @@
 package pl.wicia.projector.database.services.descriptions;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -157,8 +158,33 @@ public class DescriptionDAO implements INameDAO<Long, DescriptionEntity> {
     }
 
     @Override
-    public void addCollection(Collection<DescriptionEntity> list) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addCollection(Collection<DescriptionEntity> collection) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            
+            Iterator<DescriptionEntity> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.save(iterator.next());
+                if(number % 10 == 0){
+                    session.flush();
+                    session.clear();
+                }
+                number++;
+            }
+            
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            throw ex;
+        } 
+        finally {
+            session.close();
+        }
     }
 
     @Override
@@ -167,13 +193,45 @@ public class DescriptionDAO implements INameDAO<Long, DescriptionEntity> {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            //TODO: dorobić obiekt BatchUpdater(index, size, session)
-            for(int number = 0 ; number < collection.size() ; number++){
-                session.update(collection.iterator().next());
+            
+            Iterator<DescriptionEntity> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.update(iterator.next());
                 if(number % 10 == 0){
                     session.flush();
                     session.clear();
                 }
+                number++;
+            }
+            
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            throw ex;
+        } 
+        finally {
+            session.close();
+        }
+    }
+
+    public void deleteCollection(Collection<DescriptionEntity> collection) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            
+            Iterator<DescriptionEntity> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.delete(iterator.next());
+                if(number % 10 == 0){
+                    session.flush();
+                    session.clear();
+                }
+                number++;
             }
             
             tx.commit();

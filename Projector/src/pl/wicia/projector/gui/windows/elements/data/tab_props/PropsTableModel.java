@@ -14,7 +14,9 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
+import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.entities.props.PropEntity;
+import pl.wicia.projector.gui.windows.elements.data.tab_elements.DescriptionTableRow;
 
 /**
  * @TODO: Add class description
@@ -57,6 +59,16 @@ public class PropsTableModel extends AbstractTableModel {
             column.setPreferredWidth((defaultTableWidth*colWidths[colIndex])/100);
             colIndex++;
         }
+    }
+    
+    public void clearData(){
+        this.data.clear();
+        fireTableDataChanged();
+    }
+    
+    public void addNewRow(PropEntity entity){
+        this.data.add(new PropsTableRow(entity));
+        fireTableDataChanged();
     }
     
     public void addNewRow() {
@@ -136,18 +148,5 @@ public class PropsTableModel extends AbstractTableModel {
             rList.add(new PropEntity(prop));
         });
         return rList;
-    }
-
-    public void setRowsCount(int number) {
-        this.data.clear();
-        for(int i = 0 ; i < number ; i++){
-            this.addNewRow();
-        }
-    }
-
-    public void setNewRow(PropEntity e, int rowNumber) {
-        this.setValueAt(false, rowNumber, 0);
-        this.setValueAt(e.getCount(), rowNumber, 1);
-        this.setValueAt(e.getName(), rowNumber, 2);
     }
 }

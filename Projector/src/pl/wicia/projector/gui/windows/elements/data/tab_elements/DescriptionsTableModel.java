@@ -69,6 +69,11 @@ public class DescriptionsTableModel extends AbstractTableModel {
         this.data.add(new DescriptionTableRow(false, "", ""));
         fireTableDataChanged();
     }
+    
+    public void clearData(){
+        this.data.clear();
+        fireTableDataChanged();
+    }
 
     @Override
     public int getColumnCount() {

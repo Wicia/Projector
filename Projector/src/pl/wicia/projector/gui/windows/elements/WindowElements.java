@@ -49,11 +49,11 @@ public class WindowElements extends javax.swing.JFrame {
     }
     
     private void initTableDescriptions(){
-        this.modelElements = DescriptionsTableModel.loadModel(tableDescriptions);
+        this.modelDescriptions = DescriptionsTableModel.loadModel(tableDescriptions);
         if(this.choosenElement != null){
             List<DescriptionEntity> descriptions = this.choosenElement.getDescriptions();
             for(DescriptionEntity desc : descriptions){
-                this.modelElements.addNewRow(desc);
+                this.modelDescriptions.addNewRow(desc);
             }
         }
     }
@@ -62,11 +62,8 @@ public class WindowElements extends javax.swing.JFrame {
         this.modelProps = PropsTableModel.loadModel(tableProps);
         if(this.choosenElement != null){
             Set<PropEntity> descriptions = this.choosenElement.getProps();
-            this.modelProps.setRowsCount(descriptions.size());
-            int index = 0;
             for(PropEntity prop : descriptions){
-                this.modelProps.setNewRow(prop, index);
-                index++;
+                this.modelProps.addNewRow(prop);
             }
         }
     }
@@ -180,7 +177,7 @@ public class WindowElements extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Treść", jPanel3);
+        jTabbedPane1.addTab("Części", jPanel3);
 
         tableProps.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -307,22 +304,26 @@ public class WindowElements extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void updateExistingElement() {
-        // Update entity
+        
+        // Update DESCRIPTIONS = DELETE ALL AND INSERT NEW
+        List<DescriptionEntity> listDescs = modelDescriptions.getListEntities();
+        listDescs.stream().forEach((DescriptionEntity e) -> (e.setElement(choosenElement)));
+        DescriptionService.getService().deleteCollectionDescriptions(listDescs);
+        DescriptionService.getService().addCollectionDescriptions(listDescs);
+        
+        // Update PROPS = DELETE ALL AND INSERT NEW
+        HashSet<PropEntity> setProps = new HashSet<>(modelProps.getListEntities());
+        setProps.stream().forEach((PropEntity e) -> (e.setElement(choosenElement)));
+        PropsService.getService().deletePropsCollection(setProps);
+        PropsService.getService().addPropsCollection(setProps);
+        
+        // Update wszystkiego
         ElementService service = ElementService.getService();
+        //this.choosenElement.setDescriptions(listDescs);
+        //this.choosenElement.setProps(setProps);
         service.updateElement(this.choosenElement);
         
-        // Update DESCRIPTIONS
-        List<DescriptionEntity> listDescs = modelElements.getListEntities();
-        HashSet<DescriptionEntity> setDesc = new HashSet<>(listDescs);
-        setDesc.stream().forEach((DescriptionEntity e) -> (e.setElement(choosenElement)));
-        DescriptionService.getService().updateCollectionDescriptions(setDesc);
-        
-        // Update PROPS
-        List<PropEntity> listProps = modelProps.getListEntities();
-        HashSet<PropEntity> setProp = new HashSet<>(listProps);
-        setProp.stream().forEach((PropEntity e) -> (e.setElement(choosenElement)));
-        PropsService.getService().updatePropsCollection(setProp);
-
+        this.clearData();
     }
 
     private void addNewElement() {
@@ -331,18 +332,20 @@ public class WindowElements extends javax.swing.JFrame {
         byte time = Byte.valueOf(this.fieldTime.getText());
 
         // Update DESCRIPTIONS
-        List<DescriptionEntity> listDescs = modelElements.getListEntities();
+        List<DescriptionEntity> listDescs = modelDescriptions.getListEntities();
 
         // Update PROPS
         List<PropEntity> listProps = modelProps.getListEntities();
+        
+        this.clearData();
     }
     
     private void buttonDeleteChoosenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteChoosenActionPerformed
-        this.modelElements.removeSelectedRows();
+        this.modelDescriptions.removeSelectedRows();
     }//GEN-LAST:event_buttonDeleteChoosenActionPerformed
 
     private void buttonAddElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddElementActionPerformed
-        this.modelElements.addNewRow();
+        this.modelDescriptions.addNewRow();
     }//GEN-LAST:event_buttonAddElementActionPerformed
 
     private void buttonAddPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddPropActionPerformed
@@ -353,7 +356,6 @@ public class WindowElements extends javax.swing.JFrame {
         this.modelProps.removeSelectedRows();
     }//GEN-LAST:event_buttonDeletePropActionPerformed
 
-    //TODO: Jak to profesjonalnie zorganizować + refactroring innych metod tego typu
     public static void open() {
         SwingUtilities.invokeLater(() -> {
             WindowElements window = new WindowElements();
@@ -362,7 +364,6 @@ public class WindowElements extends javax.swing.JFrame {
         });
     }
     
-    //TODO: opakować to element ID w jakiś obiekt z ustawieniami + do innych metod też to zastosować
     public static void open(long elementID) {
         SwingUtilities.invokeLater(() -> {
             WindowElements window = new WindowElements(elementID);
@@ -371,7 +372,7 @@ public class WindowElements extends javax.swing.JFrame {
         });
     }
 
-    private DescriptionsTableModel modelElements;
+    private DescriptionsTableModel modelDescriptions;
     private PropsTableModel modelProps;
     private ElementEntity choosenElement;
 
@@ -397,4 +398,11 @@ public class WindowElements extends javax.swing.JFrame {
     private javax.swing.JTable tableProps;
     // End of variables declaration//GEN-END:variables
 
+    private void clearData() {
+        this.modelDescriptions.clearData();
+        this.modelProps.clearData();
+        this.fieldElementName.setText("");
+        this.fieldTime.setText("");
+        this.choosenElement = null;
+    }
 }

@@ -6,6 +6,8 @@
 
 package pl.wicia.projector.gui.windows.elements.data.tab_props;
 
+import pl.wicia.projector.database.entities.props.PropEntity;
+
 /**
  * @TODO: Add class description
  * @TODO: Add descrptions to fields
@@ -23,6 +25,12 @@ public class PropsTableRow {
         this.selected = selected;
         this.count = count;
         this.desc = desc;
+    }
+
+    public PropsTableRow(PropEntity entity) {
+        this.id = entity.getId();
+        this.count = entity.getCount();
+        this.desc = entity.getName();
     }
 
     public boolean isSelected() {

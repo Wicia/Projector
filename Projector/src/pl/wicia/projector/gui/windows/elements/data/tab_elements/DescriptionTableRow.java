@@ -22,7 +22,6 @@ public class DescriptionTableRow {
     private String desc;
 
     public DescriptionTableRow(boolean selected, String name, String desc) {
-        this.id = 0;
         this.selected = selected;
         this.name = name;
         this.desc = desc;

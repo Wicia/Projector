@@ -15,12 +15,12 @@
         <property name="idPattern" column="id_pattern" type="long" not-null="false"/>
         <property name="name" column="name" type="string" not-null="true"/>
         <property name="time" column="time" type="byte" not-null="true"/>
-        <list name="descriptions" table="TAB_DESCRIPTIONS" lazy="false" inverse="true" >
+        <list name="descriptions" table="TAB_DESCRIPTIONS" lazy="false" inverse="true" cascade="all">
             <key column="id_element"/>
             <list-index column="position"/>
             <one-to-many class="pl.wicia.projector.database.entities.description.DescriptionEntity"/>
         </list>
-        <set name="props" table="TAB_PROPS" lazy="false" inverse="true" >
+        <set name="props" table="TAB_PROPS" lazy="false" inverse="true" cascade="all">
             <key column="id_element" not-null="true"/>
             <one-to-many class="pl.wicia.projector.database.entities.props.PropEntity"/>
         </set>
