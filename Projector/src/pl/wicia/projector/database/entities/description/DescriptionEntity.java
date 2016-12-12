@@ -7,7 +7,7 @@
 package pl.wicia.projector.database.entities.description;
 
 import pl.wicia.projector.database.entities.element.ElementEntity;
-import pl.wicia.projector.gui.windows.elements.data.tab_elements.DescriptionTableRow;
+import pl.wicia.projector.gui.windows.elements.data.elements.DescriptionTableRow;
 
 /**
  * @TODO: Add class description

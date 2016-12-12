@@ -156,6 +156,29 @@ public class WorkshopDAO implements INameDAO<Long, WorkshopEntity> {
         
         return element.getId();
     }
+    
+    @Override
+    public Collection<WorkshopEntity> searchByName(String name) {
+        List<WorkshopEntity> list = null;
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query createQuery = session.getNamedQuery("searchWorkshopByName");
+            createQuery.setString("name", "%" + name + "%");
+            list = createQuery.list();
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+        } 
+        finally {
+            session.close();
+        }
+        
+        return list;
+    }
 
     @Override
     public void addCollection(Collection<WorkshopEntity> collection) {

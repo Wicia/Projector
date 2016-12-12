@@ -5,13 +5,12 @@
  */
 package pl.wicia.projector.gui.windows.menu;
 
+import pl.wicia.projector.gui.windows.common.list.WindowChooseList;
 import java.awt.EventQueue;
-import org.springframework.context.ApplicationContext;
-import pl.wicia.projector.gui.windows.patterns.WindowAddPattern;
-import pl.wicia.projector.gui.windows.workshops.WindowAddWorkshop;
-import pl.wicia.projector.spring.contexts.ContextSettings;
-import pl.wicia.projector.common.settings.AppSettings;
-import pl.wicia.projector.common.settings.AppSettings.PropertyName;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JLayeredPane;
+import pl.wicia.projector.database.entities.workshop.WorkshopEntity;
 
 /**
  *
@@ -24,19 +23,12 @@ public class WindowMenu extends javax.swing.JFrame {
      */
     public WindowMenu() {
         this.initComponents();
-        this.fillComponents();
+        this.initData();
     }
     
-    private void fillComponents(){
-        AppSettings settings = ContextSettings.getAppSettings();
-        this.initLabelWorkshopName(settings);
-    }
-    
-    private void initLabelWorkshopName(AppSettings s){
-        Object value = s.getPropertyValue(PropertyName.WorkshopName);
-        if(value != null){
-            this.labelWorkshopName.setText(value.toString());
-        }
+    private void initData(){
+        this.layers.add(this.layerElements);
+        this.layers.add(this.layerWorkshops);
     }
 
     /**
@@ -49,49 +41,38 @@ public class WindowMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        buttonAddWorkshop = new javax.swing.JButton();
-        buttonAddPatternElement = new javax.swing.JButton();
-        labelWorkshopName = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        buttonModifyWorkshop = new javax.swing.JButton();
+        labelWorkshops = new javax.swing.JLabel();
+        labelElements = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        layerWorkshops = new javax.swing.JLayeredPane();
+        jPanel3 = new javax.swing.JPanel();
+        buttonManage = new javax.swing.JButton();
+        layerElements = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 102, 0));
 
-        buttonAddWorkshop.setBackground(new java.awt.Color(255, 102, 0));
-        buttonAddWorkshop.setText("Dodawanie warsztatu");
-        buttonAddWorkshop.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddWorkshopActionPerformed(evt);
+        labelWorkshops.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelWorkshops.setForeground(new java.awt.Color(0, 0, 0));
+        labelWorkshops.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        labelWorkshops.setText("Warsztaty");
+        labelWorkshops.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        labelWorkshops.setName("Warsztaty"); // NOI18N
+        labelWorkshops.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelWorkshopsMouseEntered(evt);
             }
         });
 
-        buttonAddPatternElement.setBackground(new java.awt.Color(255, 102, 0));
-        buttonAddPatternElement.setText("Dodawanie wzorców");
-        buttonAddPatternElement.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddPatternElementActionPerformed(evt);
-            }
-        });
-
-        labelWorkshopName.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        labelWorkshopName.setForeground(new java.awt.Color(0, 0, 0));
-        labelWorkshopName.setText("wewr");
-
-        jButton1.setBackground(new java.awt.Color(255, 102, 0));
-        jButton1.setText("Zmień");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        buttonModifyWorkshop.setBackground(new java.awt.Color(255, 102, 0));
-        buttonModifyWorkshop.setText("Modyfikuj warsztat");
-        buttonModifyWorkshop.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonModifyWorkshopActionPerformed(evt);
+        labelElements.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelElements.setForeground(new java.awt.Color(0, 0, 0));
+        labelElements.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        labelElements.setText("Elementy");
+        labelElements.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        labelElements.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelElementsMouseEntered(evt);
             }
         });
 
@@ -100,68 +81,135 @@ public class WindowMenu extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelWorkshopName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(buttonAddWorkshop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonAddPatternElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonModifyWorkshop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 223, Short.MAX_VALUE)))
+                    .addComponent(labelWorkshops, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(labelElements, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(buttonModifyWorkshop)
+                .addContainerGap()
+                .addComponent(labelWorkshops)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonAddPatternElement)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonAddWorkshop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelWorkshopName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(13, 13, 13))
+                .addComponent(labelElements)
+                .addContainerGap(250, Short.MAX_VALUE))
+        );
+
+        layerWorkshops.setName("WORKSHOPS"); // NOI18N
+
+        buttonManage.setText("Zarządzaj");
+        buttonManage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonManageActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(buttonManage)
+                .addContainerGap(123, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(buttonManage)
+                .addContainerGap(206, Short.MAX_VALUE))
+        );
+
+        layerWorkshops.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout layerWorkshopsLayout = new javax.swing.GroupLayout(layerWorkshops);
+        layerWorkshops.setLayout(layerWorkshopsLayout);
+        layerWorkshopsLayout.setHorizontalGroup(
+            layerWorkshopsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layerWorkshopsLayout.setVerticalGroup(
+            layerWorkshopsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        layerElements.setName("ELEMENTS"); // NOI18N
+
+        javax.swing.GroupLayout layerElementsLayout = new javax.swing.GroupLayout(layerElements);
+        layerElements.setLayout(layerElementsLayout);
+        layerElementsLayout.setHorizontalGroup(
+            layerElementsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 294, Short.MAX_VALUE)
+        );
+        layerElementsLayout.setVerticalGroup(
+            layerElementsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(layerWorkshops)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addComponent(layerElements)
+                    .addContainerGap()))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(layerWorkshops, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(layerElements, javax.swing.GroupLayout.Alignment.TRAILING))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonAddWorkshopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddWorkshopActionPerformed
-        WindowAddWorkshop.open();
-        this.dispose();
-    }//GEN-LAST:event_buttonAddWorkshopActionPerformed
-    
-    private void buttonAddPatternElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddPatternElementActionPerformed
-        WindowAddPattern.open();
-        this.dispose();
-    }//GEN-LAST:event_buttonAddPatternElementActionPerformed
+    private void labelWorkshopsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelWorkshopsMouseEntered
+        this.showLayer(LayerName.WORKSHOPS);
+    }//GEN-LAST:event_labelWorkshopsMouseEntered
 
-    private void buttonModifyWorkshopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModifyWorkshopActionPerformed
+    private void labelElementsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelElementsMouseEntered
+        this.showLayer(LayerName.ELEMENTS);
+    }//GEN-LAST:event_labelElementsMouseEntered
+
+    private void buttonManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonManageActionPerformed
+        WindowChooseList.open(WorkshopEntity.class);
+        this.dispose();
+    }//GEN-LAST:event_buttonManageActionPerformed
         
-    }//GEN-LAST:event_buttonModifyWorkshopActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        WindowChooseWorkshop.open();
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void showLayer(LayerName name){
+        layers.stream().forEach((JLayeredPane pane) -> {
+            if(pane.getName().equals(name.toString())){
+                pane.setVisible(Boolean.TRUE);
+            }
+            else{
+                pane.setVisible(Boolean.FALSE);
+            }
+        });
+    }
     
     //TODO: Jak to profesjonalnie zorganizować + refactroring innych metod tego typu
     public static void open(){
@@ -171,13 +219,18 @@ public class WindowMenu extends javax.swing.JFrame {
             window.setLocationRelativeTo(null);
         });    
     }
-
+    
+    private enum LayerName {WORKSHOPS, ELEMENTS}
+    private List<JLayeredPane> layers = new ArrayList<>();
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonAddPatternElement;
-    private javax.swing.JButton buttonAddWorkshop;
-    private javax.swing.JButton buttonModifyWorkshop;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton buttonManage;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel labelWorkshopName;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel labelElements;
+    private javax.swing.JLabel labelWorkshops;
+    private javax.swing.JLayeredPane layerElements;
+    private javax.swing.JLayeredPane layerWorkshops;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,7 @@
 package pl.wicia.projector.main;
 
 import javax.swing.UIManager;
-import pl.wicia.projector.gui.windows.elements.WindowElements;
+import pl.wicia.projector.gui.windows.elements.WindowElement;
 import pl.wicia.projector.gui.windows.menu.WindowMenu;
 import pl.wicia.projector.spring.contexts.ContextMain;
 import pl.wicia.projector.spring.contexts.ContextSettings;

@@ -6,7 +6,7 @@
 
 package pl.wicia.projector.database.common;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @param <TypeID>
@@ -19,4 +19,5 @@ import java.util.List;
 public interface INameDAO<TypeID, TypeElement> 
         extends IDataAccessObject<TypeID, TypeElement>{
     public TypeElement getByName(String name) throws Exception;
+    public Collection<TypeElement> searchByName(String name);
 }

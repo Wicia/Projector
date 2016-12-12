@@ -15,11 +15,11 @@ package pl.wicia.projector.main;
 public class TASKS {
     
     private static class Critical{
-        //TODO: sprawdzić, czy w update Collection jest scrollable result + batch
         //TODO: Może do plików Entity zastosować wzorzec Dekorator?
         //TODO: dorobić mapowanie kolekcji do pozostałych klas entity
         //TODO: stworzyć wrappery na obiekty entity
         //TODO: dorobić obiekt BatchUpdater(index, size, session)
+        //TODO: superklasa używająca JFRAME + mając obiekt do wyświetlania dialogów
     }
     
     private static class Typical{
@@ -27,5 +27,13 @@ public class TASKS {
         //TODO: dodać nazwy do każdych z okienek + odznaczyć opcję Resizeable
         //TODO: Gdzie umieścić metody uzywajace named query?
         //TODO: stworzyć obiekt z ustawieniami + zaimplementować go w cctorach okienek i miejsc, gdzie są tworzone
+        //TODO: tam gdzie sa tabele ustawić wysokość wierszy
     }
+    
+//        AppSettings settings = ContextSettings.getAppSettings();
+//        this.initLabelWorkshopName(settings);
+//        Object value = settings.getPropertyValue(PropertyName.WorkshopName);
+//        if(value != null){
+//            this.labelWorkshopName.setText(value.toString());
+//        }
 }

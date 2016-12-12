@@ -245,4 +245,9 @@ public class DescriptionDAO implements INameDAO<Long, DescriptionEntity> {
             session.close();
         }
     }
+
+    @Override
+    public Collection<DescriptionEntity> searchByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

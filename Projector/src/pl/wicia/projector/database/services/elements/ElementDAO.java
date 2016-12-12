@@ -165,4 +165,9 @@ public class ElementDAO implements INameDAO<Long, ElementEntity> {
     public void updateCollection(Collection<ElementEntity> collection) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Collection<ElementEntity> searchByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

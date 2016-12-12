@@ -245,4 +245,9 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
             session.close();
         }
     }
+
+    @Override
+    public Collection<PropEntity> searchByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -6,6 +6,7 @@
 
 package pl.wicia.projector.database.services.workshop;
 
+import java.util.Collection;
 import java.util.List;
 import pl.wicia.projector.database.entities.workshop.WorkshopEntity;
 import pl.wicia.projector.common.exceptions.ExceptionDuplicateEntity;
@@ -45,6 +46,10 @@ public class WorkshopService{
     
     public WorkshopEntity getWorkshopByName(String name){
         return this.dao.getByName(name);
+    }
+    
+    public Collection<WorkshopEntity> searchWorkshopByName(String name){
+        return this.dao.searchByName(name);
     }
     
     public WorkshopEntity getWorkshopByID(Long id){

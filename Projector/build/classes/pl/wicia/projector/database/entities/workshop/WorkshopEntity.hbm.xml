@@ -22,5 +22,9 @@
     <query name="findWorkshopByID">
         FROM WorkshopEntity WHERE id = :id
     </query>
+    
+    <query name="searchWorkshopByName">
+        FROM WorkshopEntity WHERE name LIKE :name
+    </query>
    
 </hibernate-mapping>

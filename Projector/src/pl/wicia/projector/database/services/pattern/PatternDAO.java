@@ -165,4 +165,9 @@ public class PatternDAO implements INameDAO<Long, PatternEntity> {
     public void updateCollection(Collection<PatternEntity> collection) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Collection<PatternEntity> searchByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
