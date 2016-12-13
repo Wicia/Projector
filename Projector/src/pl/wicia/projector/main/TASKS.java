@@ -15,14 +15,17 @@ package pl.wicia.projector.main;
 public class TASKS {
     
     private static class Critical{
+        //TODO: ServiceBase + mechanizm batchy
         //TODO: Może do plików Entity zastosować wzorzec Dekorator?
         //TODO: dorobić mapowanie kolekcji do pozostałych klas entity
         //TODO: stworzyć wrappery na obiekty entity
         //TODO: dorobić obiekt BatchUpdater(index, size, session)
         //TODO: superklasa używająca JFRAME + mając obiekt do wyświetlania dialogów
+        //TODO: Services/sprawdzić, czy metody update'ujące operują na małej ilości danych (nie ma wyciągania z bazy i update'u na dużej liczbie danych)
     }
     
     private static class Typical{
+        //TODO: Gdzie umieścić metody uzywajace named query?
         //TODO: uzupełnić pliki Entity, o dodatkowe atrybuty w properties
         //TODO: dodać nazwy do każdych z okienek + odznaczyć opcję Resizeable
         //TODO: Gdzie umieścić metody uzywajace named query?

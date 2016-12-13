@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.props.PropEntity;
 import pl.wicia.projector.database.common.INameDAO;
+import pl.wicia.projector.database.services.common.ServiceBase;
 
 /**
  * @TODO: Add class description
@@ -21,39 +22,19 @@ import pl.wicia.projector.database.common.INameDAO;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class PropsDAO implements INameDAO<Long, PropEntity> {
-
-    private SessionFactory factory;
+public class PropsDAO 
+        extends ServiceBase<PropEntity>
+        implements INameDAO<Long, PropEntity> {
 
     public PropsDAO(SessionFactory factory) {
-        this.factory = factory;
-    }
-
-    @Override
-    public List<PropEntity> getAll() {
-        List<PropEntity> list = null;
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            list = session.createCriteria(PropEntity.class).list();
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return list;
+        super(factory);
+        super.setTypeClass(PropEntity.class);
     }
     
     @Override
     public PropEntity getByName(String name){
         PropEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -78,7 +59,7 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
     @Override
     public PropEntity get(Long id) {
         PropEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -102,7 +83,7 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
 
     @Override
     public void update(PropEntity element) {
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -120,7 +101,7 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
 
     @Override
     public void delete(PropEntity element) {
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -137,8 +118,8 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
     }
     
     @Override
-    public Long add(PropEntity element) throws Exception{
-        Session session = this.factory.openSession();
+    public Long add(PropEntity element){
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -148,7 +129,6 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
         catch (Exception ex) {
             if (tx != null)
                 tx.rollback();
-            throw ex;
         } 
         finally {
             session.close();
@@ -159,7 +139,7 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
 
     @Override
     public void addCollection(Collection<PropEntity> collection) {
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -189,7 +169,7 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
 
     @Override
     public void updateCollection(Collection<PropEntity> collection) {
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -218,7 +198,7 @@ public class PropsDAO implements INameDAO<Long, PropEntity> {
     }
 
     public void deleteCollection(Collection<PropEntity> collection) {
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();

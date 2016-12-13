@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.workshop.WorkshopEntity;
 import pl.wicia.projector.database.common.INameDAO;
+import pl.wicia.projector.database.services.common.ServiceBase;
 
 /**
  * @TODO: Add class description
@@ -20,40 +21,19 @@ import pl.wicia.projector.database.common.INameDAO;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class WorkshopDAO implements INameDAO<Long, WorkshopEntity> {
-
-    private SessionFactory factory;
+public class WorkshopDAO 
+        extends ServiceBase<WorkshopEntity>
+        implements INameDAO<Long, WorkshopEntity> {
 
     public WorkshopDAO(SessionFactory factory) {
-        this.factory = factory;
-    }
-
-    @Override
-    public List<WorkshopEntity> getAll() {
-        List<WorkshopEntity> list = null;
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            list = session.createCriteria(WorkshopEntity.class).list();
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return list;
+        super(factory);
+        super.setTypeClass(WorkshopEntity.class); //TODO: refactoring?
     }
     
-    // TODO: Gdzie umieścić metody uzywajace named query?
     @Override
     public WorkshopEntity getByName(String name){
         WorkshopEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = super.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -78,7 +58,7 @@ public class WorkshopDAO implements INameDAO<Long, WorkshopEntity> {
     @Override
     public WorkshopEntity get(Long id) {
         WorkshopEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -102,7 +82,7 @@ public class WorkshopDAO implements INameDAO<Long, WorkshopEntity> {
 
     @Override
     public void update(WorkshopEntity element) {
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -120,7 +100,7 @@ public class WorkshopDAO implements INameDAO<Long, WorkshopEntity> {
 
     @Override
     public void delete(WorkshopEntity element) {
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -138,7 +118,7 @@ public class WorkshopDAO implements INameDAO<Long, WorkshopEntity> {
 
     @Override
     public Long add(WorkshopEntity element) throws Exception{
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -160,7 +140,7 @@ public class WorkshopDAO implements INameDAO<Long, WorkshopEntity> {
     @Override
     public Collection<WorkshopEntity> searchByName(String name) {
         List<WorkshopEntity> list = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();

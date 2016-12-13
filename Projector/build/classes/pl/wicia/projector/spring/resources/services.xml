@@ -14,8 +14,13 @@
             http://www.springframework.org/schema/util 
             http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     
+    <!-- SERVICE BASE -->
+    <bean id="ServiceBase" class="pl.wicia.projector.database.services.common.ServiceBase" abstract="true" scope="prototype">
+        <constructor-arg name="factory" ref="sessionFactory"/>
+    </bean>
+    
     <!-- WORKSHOP -->
-    <bean id="WorkshopDAO" class="pl.wicia.projector.database.services.workshop.WorkshopDAO" scope="prototype">
+    <bean id="WorkshopDAO" class="pl.wicia.projector.database.services.workshop.WorkshopDAO" parent="ServiceBase" scope="prototype">
         <constructor-arg name="factory" ref="sessionFactory"/>
     </bean>
     <bean id="WorkshopService" class="pl.wicia.projector.database.services.workshop.WorkshopService" scope="prototype">
@@ -39,7 +44,7 @@
     </bean>
     
     <!-- PROPS -->
-    <bean id="PropsDAO" class="pl.wicia.projector.database.services.props.PropsDAO" scope="prototype">
+    <bean id="PropsDAO" class="pl.wicia.projector.database.services.props.PropsDAO" parent="ServiceBase" scope="prototype">
         <constructor-arg name="factory" ref="sessionFactory"/>
     </bean>
     <bean id="PropsService" class="pl.wicia.projector.database.services.props.PropsService" scope="prototype">

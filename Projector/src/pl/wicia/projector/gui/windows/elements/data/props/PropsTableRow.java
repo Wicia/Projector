@@ -17,12 +17,10 @@ import pl.wicia.projector.database.entities.props.PropEntity;
 public class PropsTableRow {
 
     private long id;
-    private boolean selected;
     private int count;
     private String desc;
 
-    public PropsTableRow(boolean selected, int count, String desc) {
-        this.selected = selected;
+    public PropsTableRow(int count, String desc) {
         this.count = count;
         this.desc = desc;
     }
@@ -31,14 +29,6 @@ public class PropsTableRow {
         this.id = entity.getId();
         this.count = entity.getCount();
         this.desc = entity.getName();
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
 
     public String getDesc() {
@@ -55,5 +45,13 @@ public class PropsTableRow {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

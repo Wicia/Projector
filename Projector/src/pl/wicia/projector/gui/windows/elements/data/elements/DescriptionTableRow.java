@@ -17,12 +17,10 @@ import pl.wicia.projector.database.entities.description.DescriptionEntity;
 public class DescriptionTableRow {
 
     private long id;
-    private boolean selected;
     private String name;
     private String desc;
 
-    public DescriptionTableRow(boolean selected, String name, String desc) {
-        this.selected = selected;
+    public DescriptionTableRow(String name, String desc) {
         this.name = name;
         this.desc = desc;
     }
@@ -31,14 +29,6 @@ public class DescriptionTableRow {
         this.id = entity.getId();
         this.name = entity.getName();
         this.desc = entity.getText();
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
 
     public String getName() {
@@ -55,5 +45,13 @@ public class DescriptionTableRow {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+    
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

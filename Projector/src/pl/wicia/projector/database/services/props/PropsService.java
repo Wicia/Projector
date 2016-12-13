@@ -8,8 +8,6 @@ package pl.wicia.projector.database.services.props;
 
 import java.util.Collection;
 import java.util.List;
-import pl.wicia.projector.common.exceptions.ExceptionDuplicateEntity;
-import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.entities.props.PropEntity;
 import pl.wicia.projector.spring.contexts.ContextMain;
 
@@ -33,15 +31,8 @@ public class PropsService{
         this.dao = dao;
     }
     
-    public void addProps(PropEntity entity) 
-            throws ExceptionDuplicateEntity, Exception{
-        PropEntity dbEntity = this.dao.getByName(entity.getName());
-        if(dbEntity != null){
-            throw new ExceptionDuplicateEntity(PropEntity.class);
-        }
-        else{
-            this.dao.add(entity);
-        }
+    public void addProps(PropEntity entity){
+        this.dao.add(entity);
     }
     
     public void addPropsCollection(Collection<PropEntity> collection){

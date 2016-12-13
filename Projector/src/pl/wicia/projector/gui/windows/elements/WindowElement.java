@@ -8,6 +8,7 @@ package pl.wicia.projector.gui.windows.elements;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.BorderFactory;
 import pl.wicia.projector.gui.windows.elements.data.elements.DescriptionsTableModel;
 import javax.swing.SwingUtilities;
 import pl.wicia.projector.database.entities.description.DescriptionEntity;
@@ -31,7 +32,7 @@ public class WindowElement extends javax.swing.JFrame {
         this.initComponents();
         this.fillComponents();
     }
-    
+
     public WindowElement(long choosenElemenID) {
         this.initElement(choosenElemenID);
         this.initComponents();
@@ -42,27 +43,27 @@ public class WindowElement extends javax.swing.JFrame {
         this.initTableDescriptions();
         this.initTableProps();
     }
-    
-    private void initElement(long elementID){
+
+    private void initElement(long elementID) {
         ElementService service = ElementService.getService();
         this.choosenElement = service.getElementByID(elementID);
     }
-    
-    private void initTableDescriptions(){
+
+    private void initTableDescriptions() {
         this.modelDescriptions = DescriptionsTableModel.loadModel(tableDescriptions);
-        if(this.choosenElement != null){
+        if (this.choosenElement != null) {
             List<DescriptionEntity> descriptions = this.choosenElement.getDescriptions();
-            for(DescriptionEntity desc : descriptions){
+            for (DescriptionEntity desc : descriptions) {
                 this.modelDescriptions.addNewRow(desc);
             }
         }
     }
-    
-    private void initTableProps(){
+
+    private void initTableProps() {
         this.modelProps = PropsTableModel.loadModel(tableProps);
-        if(this.choosenElement != null){
+        if (this.choosenElement != null) {
             Set<PropEntity> descriptions = this.choosenElement.getProps();
-            for(PropEntity prop : descriptions){
+            for (PropEntity prop : descriptions) {
                 this.modelProps.addNewRow(prop);
             }
         }
@@ -81,21 +82,22 @@ public class WindowElement extends javax.swing.JFrame {
         fieldElementName = new javax.swing.JTextField();
         fieldTime = new javax.swing.JTextField();
         comboPatterns = new javax.swing.JComboBox<>();
-        buttonSave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabsAspects = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDescriptions = new javax.swing.JTable();
-        buttonAddElement = new javax.swing.JButton();
-        buttonDeleteChoosen = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableProps = new javax.swing.JTable();
-        buttonAddProp = new javax.swing.JButton();
-        buttonDeleteProp = new javax.swing.JButton();
+        panelButtons = new javax.swing.JPanel();
+        buttonAddElement = new javax.swing.JButton();
+        buttonDeleteChoosen = new javax.swing.JButton();
+        buttonDown = new javax.swing.JButton();
+        buttonUp = new javax.swing.JButton();
+        buttonSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -103,14 +105,6 @@ public class WindowElement extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(40, 120, 115));
 
         comboPatterns.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{}));
-
-        buttonSave.setBackground(new java.awt.Color(40, 120, 115));
-        buttonSave.setText("Zapisz");
-        buttonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSaveActionPerformed(evt);
-            }
-        });
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,51 +127,24 @@ public class WindowElement extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tableDescriptions);
 
-        buttonAddElement.setBackground(new java.awt.Color(40, 120, 115));
-        buttonAddElement.setText("Dodaj");
-        buttonAddElement.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddElementActionPerformed(evt);
-            }
-        });
-
-        buttonDeleteChoosen.setBackground(new java.awt.Color(40, 120, 115));
-        buttonDeleteChoosen.setText("Usuń");
-        buttonDeleteChoosen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDeleteChoosenActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                        .addGap(14, 14, 14))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(buttonAddElement)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonDeleteChoosen)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDeleteChoosen)
-                    .addComponent(buttonAddElement))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Części", jPanel3);
+        tabsAspects.addTab("Części", jPanel3);
 
         tableProps.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,51 +155,97 @@ public class WindowElement extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tableProps);
 
-        buttonAddProp.setBackground(new java.awt.Color(255, 140, 0));
-        buttonAddProp.setText("Dodaj");
-        buttonAddProp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddPropActionPerformed(evt);
-            }
-        });
-
-        buttonDeleteProp.setBackground(new java.awt.Color(255, 140, 0));
-        buttonDeleteProp.setText("Usuń");
-        buttonDeleteProp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDeletePropActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                        .addGap(14, 14, 14))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(buttonAddProp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonDeleteProp)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDeleteProp)
-                    .addComponent(buttonAddProp))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Rekwizyty", jPanel4);
+        tabsAspects.addTab("Rekwizyty", jPanel4);
+
+        buttonAddElement.setBackground(new java.awt.Color(40, 120, 115));
+        buttonAddElement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/wicia/projector/gui/resources/icon_add.png"))); // NOI18N
+        buttonAddElement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddElementActionPerformed(evt);
+            }
+        });
+        buttonAddElement.setBorder(BorderFactory.createEmptyBorder());
+
+        buttonDeleteChoosen.setBackground(new java.awt.Color(40, 120, 115));
+        buttonDeleteChoosen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/wicia/projector/gui/resources/icon_delete.png"))); // NOI18N
+        buttonDeleteChoosen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDeleteChoosenActionPerformed(evt);
+            }
+        });
+        buttonDeleteChoosen.setBorder(BorderFactory.createEmptyBorder());
+
+        buttonDown.setBackground(new java.awt.Color(40, 120, 115));
+        buttonDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/wicia/projector/gui/resources/icon_arrow_up.png"))); // NOI18N
+        buttonDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDownActionPerformed(evt);
+            }
+        });
+        buttonDown.setBorder(BorderFactory.createEmptyBorder());
+
+        buttonUp.setBackground(new java.awt.Color(40, 120, 115));
+        buttonUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/wicia/projector/gui/resources/icon_arrow_down.png"))); // NOI18N
+        buttonUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUpActionPerformed(evt);
+            }
+        });
+        buttonDown.setBorder(BorderFactory.createEmptyBorder());
+
+        buttonSave.setBackground(new java.awt.Color(40, 120, 115));
+        buttonSave.setText("Zapisz");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelButtonsLayout = new javax.swing.GroupLayout(panelButtons);
+        panelButtons.setLayout(panelButtonsLayout);
+        panelButtonsLayout.setHorizontalGroup(
+            panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelButtonsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonAddElement, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonDeleteChoosen, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonDown, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonUp, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonSave)
+                .addContainerGap())
+        );
+        panelButtonsLayout.setVerticalGroup(
+            panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(buttonAddElement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonDeleteChoosen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonDown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonUp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelButtonsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -241,6 +254,7 @@ public class WindowElement extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -254,10 +268,7 @@ public class WindowElement extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(comboPatterns, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(fieldElementName)))
-                    .addComponent(jTabbedPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(buttonSave)))
+                    .addComponent(tabsAspects))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -274,10 +285,10 @@ public class WindowElement extends javax.swing.JFrame {
                     .addComponent(fieldElementName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonSave)
-                .addContainerGap())
+                .addComponent(tabsAspects, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -295,32 +306,84 @@ public class WindowElement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        if(this.choosenElement != null){
+        if (this.choosenElement != null) {
             this.updateExistingElement();
-        }
-        else{
+        } else {
             this.addNewElement();
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
+    private void buttonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDownActionPerformed
+        switch (this.tabsAspects.getSelectedIndex()) {
+            case DESCS:
+                this.modelDescriptions.downSelectedRow();
+                break;
+            case PROPS:
+                this.modelProps.downSelectedRow();
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_buttonDownActionPerformed
+
+    private void buttonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpActionPerformed
+        switch (this.tabsAspects.getSelectedIndex()) {
+            case DESCS:
+                this.modelDescriptions.upSelectedRow();
+                break;
+            case PROPS:
+                this.modelProps.upSelectedRow();
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_buttonUpActionPerformed
+
+    private void buttonDeleteChoosenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteChoosenActionPerformed
+        switch (this.tabsAspects.getSelectedIndex()) {
+            case DESCS:
+                this.modelDescriptions.removeSelectedRows();
+                break;
+            case PROPS:
+                this.modelProps.removeSelectedRows();
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_buttonDeleteChoosenActionPerformed
+
+    private void buttonAddElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddElementActionPerformed
+        switch (this.tabsAspects.getSelectedIndex()) {
+            case DESCS:
+                this.modelDescriptions.addNewRow();
+                break;
+            case PROPS:
+                this.modelProps.addNewRow();
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_buttonAddElementActionPerformed
+
+    //TODO: coś z tym zrobić - na inna warstwe danych?
     private void updateExistingElement() {
-        
+
         // Update DESCRIPTIONS = DELETE ALL AND INSERT NEW
         List<DescriptionEntity> listDescs = modelDescriptions.getListEntities();
         listDescs.stream().forEach((DescriptionEntity e) -> (e.setElement(choosenElement)));
         DescriptionService.getService().deleteCollectionDescriptions(listDescs);
         DescriptionService.getService().addCollectionDescriptions(listDescs);
-        
+
         // Update PROPS = DELETE ALL AND INSERT NEW
         HashSet<PropEntity> setProps = new HashSet<>(modelProps.getListEntities());
         setProps.stream().forEach((PropEntity e) -> (e.setElement(choosenElement)));
         PropsService.getService().deletePropsCollection(setProps);
         PropsService.getService().addPropsCollection(setProps);
-        
+
         // Update ELEMENT
         ElementService service = ElementService.getService();
         service.updateElement(this.choosenElement);
-        
+
         this.clearData();
     }
 
@@ -328,7 +391,7 @@ public class WindowElement extends javax.swing.JFrame {
         //TODO: Walidacja, potem wstawianie
         String elementName = this.fieldElementName.getText();
         byte time = Byte.valueOf(this.fieldTime.getText());
-        
+
         ElementEntity entity = new ElementEntity();
         entity.setName(elementName);
         entity.setTime(time);
@@ -342,29 +405,13 @@ public class WindowElement extends javax.swing.JFrame {
         HashSet<PropEntity> setProps = new HashSet<>(modelProps.getListEntities());
         setProps.stream().forEach((PropEntity e) -> (e.setElement(entity)));
         entity.setDescriptions(listDescs);
-        
+
         // Update ELEMENT
         ElementService service = ElementService.getService();
         service.updateElement(this.choosenElement);
-        
+
         this.clearData();
     }
-    
-    private void buttonDeleteChoosenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteChoosenActionPerformed
-        this.modelDescriptions.removeSelectedRows();
-    }//GEN-LAST:event_buttonDeleteChoosenActionPerformed
-
-    private void buttonAddElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddElementActionPerformed
-        this.modelDescriptions.addNewRow();
-    }//GEN-LAST:event_buttonAddElementActionPerformed
-
-    private void buttonAddPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddPropActionPerformed
-        this.modelProps.addNewRow();
-    }//GEN-LAST:event_buttonAddPropActionPerformed
-
-    private void buttonDeletePropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeletePropActionPerformed
-        this.modelProps.removeSelectedRows();
-    }//GEN-LAST:event_buttonDeletePropActionPerformed
 
     public static void open() {
         SwingUtilities.invokeLater(() -> {
@@ -373,7 +420,7 @@ public class WindowElement extends javax.swing.JFrame {
             window.setLocationRelativeTo(null);
         });
     }
-    
+
     public static void open(long elementID) {
         SwingUtilities.invokeLater(() -> {
             WindowElement window = new WindowElement(elementID);
@@ -382,16 +429,19 @@ public class WindowElement extends javax.swing.JFrame {
         });
     }
 
+    private final int PROPS = 1;
+    private final int DESCS = 0;
+
     private DescriptionsTableModel modelDescriptions;
     private PropsTableModel modelProps;
     private ElementEntity choosenElement;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAddElement;
-    private javax.swing.JButton buttonAddProp;
     private javax.swing.JButton buttonDeleteChoosen;
-    private javax.swing.JButton buttonDeleteProp;
+    private javax.swing.JButton buttonDown;
     private javax.swing.JButton buttonSave;
+    private javax.swing.JButton buttonUp;
     private javax.swing.JComboBox<String> comboPatterns;
     private javax.swing.JTextField fieldElementName;
     private javax.swing.JTextField fieldTime;
@@ -403,9 +453,10 @@ public class WindowElement extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel panelButtons;
     private javax.swing.JTable tableDescriptions;
     private javax.swing.JTable tableProps;
+    private javax.swing.JTabbedPane tabsAspects;
     // End of variables declaration//GEN-END:variables
 
     private void clearData() {
