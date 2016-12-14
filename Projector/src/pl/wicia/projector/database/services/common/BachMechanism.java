@@ -9,7 +9,8 @@ package pl.wicia.projector.database.services.common;
 import org.hibernate.Session;
 
 /**
- * @TODO: Add description to: class, fields, methods
+ * Batch update mechanizm class.
+ * 
  * @author Michał 'Wicia' Wietecha
  */
 public class BachMechanism {
@@ -17,8 +18,8 @@ public class BachMechanism {
     private int BATCH_SIZE;
     private int number;
     
-    public BachMechanism(int batchSize){
-        this.BATCH_SIZE = batchSize;
+    public BachMechanism(HibernatePropertiesWrapper properties){
+        this.BATCH_SIZE = properties.getBatchSize();
         this.number = 0;
     }
     

@@ -6,6 +6,7 @@
 package pl.wicia.projector.main;
 
 import javax.swing.UIManager;
+import pl.wicia.projector.database.services.common.BachMechanism;
 import pl.wicia.projector.gui.windows.elements.WindowElement;
 import pl.wicia.projector.gui.windows.menu.WindowMenu;
 import pl.wicia.projector.spring.contexts.ContextMain;
@@ -24,7 +25,8 @@ public class Main {
     public static void main(String[] args) {
         initContexts();
         loadLookAndFeel();
-        WindowElement.open();
+        
+        Object bean = ContextMain.getApplicationContext().getBean("Batcher");
     }
     
     private static void loadLookAndFeel(){

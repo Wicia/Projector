@@ -13,14 +13,12 @@
             http://www.springframework.org/schema/context/spring-context-3.0.xsd
             http://www.springframework.org/schema/util 
             http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    
-    <!-- RESOURCES -->
-    <util:list id="HibernateEntities" value-type="java.lang.String">
-        <value>pl/wicia/projector/database/entities/workshop/WorkshopEntity.hbm.xml</value>
-        <value>pl/wicia/projector/database/entities/pattern/PatternEntity.hbm.xml</value>
-        <value>pl/wicia/projector/database/entities/element/ElementEntity.hbm.xml</value>
-        <value>pl/wicia/projector/database/entities/props/PropEntity.hbm.xml</value>
-        <value>pl/wicia/projector/database/entities/description/DescriptionEntity.hbm.xml</value>
-    </util:list>
-   
+
+    <!-- DB UTILS -->
+    <bean id="Batcher" 
+          class="pl.wicia.projector.database.services.common.BachMechanism" 
+          scope="prototype">
+        <constructor-arg name="properties" ref="HibernatePropertiesWrapper"/>
+    </bean>
+
 </beans>

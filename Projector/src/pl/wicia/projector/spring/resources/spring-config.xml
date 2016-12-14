@@ -14,16 +14,21 @@
             http://www.springframework.org/schema/util 
             http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
+    <!-- IMPORT -->
+    <import resource="services.xml"/>
+    <import resource="entities.xml"/>
+    <import resource="database.xml"/>
+    
     <!-- HIBERNATE BEANS -->
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="mappingResources" ref="listHbmEntities"/>
-        <property name="hibernateProperties" ref="hibernateProperties"/>
+        <property name="mappingResources" ref="HibernateEntities"/>
+        <property name="hibernateProperties" ref="HibernateProperties"/>
     </bean>
     
     <!-- PROPERTIES -->
-    <bean id="hibernateProperties"
+    <bean id="HibernateProperties"
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
@@ -34,6 +39,11 @@
                 <prop key="connection.characterEncoding">utf8</prop>
             </props>
         </property>
+    </bean>
+    <bean id="HibernatePropertiesWrapper" 
+          class="pl.wicia.projector.database.services.common.HibernatePropertiesWrapper" 
+          scope="singleton">
+        <constructor-arg name="properties" value="#{HibernateProperties}"/>
     </bean>
     
     <!-- DATA SOURCE -->
@@ -47,9 +57,5 @@
     
     <!-- CONTEXTS -->
     <bean id="MainContext" class="pl.wicia.projector.spring.contexts.ContextMain"/>
-    
-    <!-- IMPORT -->
-    <import resource="services.xml"/>
-    <import resource="entities.xml"/>
    
 </beans>

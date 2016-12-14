@@ -15,7 +15,7 @@
             http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     
     <!-- RESOURCES -->
-    <util:list id="listHbmEntities" value-type="java.lang.String">
+    <util:list id="HibernateEntities" value-type="java.lang.String">
         <value>pl/wicia/projector/database/entities/workshop/WorkshopEntity.hbm.xml</value>
         <value>pl/wicia/projector/database/entities/pattern/PatternEntity.hbm.xml</value>
         <value>pl/wicia/projector/database/entities/element/ElementEntity.hbm.xml</value>
