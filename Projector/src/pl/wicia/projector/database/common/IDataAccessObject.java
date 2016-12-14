@@ -19,8 +19,8 @@ import java.util.List;
  */
 public interface IDataAccessObject<TypeID, TypeElement> {
     // Single
-    public TypeID add(TypeElement element) throws Exception;
     public TypeElement get(TypeID id);
+    public void add(TypeElement element) throws Exception;
     public void update(TypeElement element);
     public void delete(TypeElement element);
     

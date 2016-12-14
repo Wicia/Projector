@@ -79,63 +79,6 @@ public class WorkshopDAO
         
         return entity;
     }
-
-    @Override
-    public void update(WorkshopEntity element) {
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.update(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public void delete(WorkshopEntity element) {
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.delete(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public Long add(WorkshopEntity element) throws Exception{
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.persist(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-            throw ex;
-        } 
-        finally {
-            session.close();
-        }
-        
-        return element.getId();
-    }
     
     @Override
     public Collection<WorkshopEntity> searchByName(String name) {

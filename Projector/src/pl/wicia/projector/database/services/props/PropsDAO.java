@@ -82,62 +82,6 @@ public class PropsDAO
     }
 
     @Override
-    public void update(PropEntity element) {
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.update(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public void delete(PropEntity element) {
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.delete(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-    
-    @Override
-    public Long add(PropEntity element){
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.save(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return element.getId();
-    }
-
-    @Override
     public void addCollection(Collection<PropEntity> collection) {
         Session session = this.getSessionFactory().openSession();
         Transaction tx = null;

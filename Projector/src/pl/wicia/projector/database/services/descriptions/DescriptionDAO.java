@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.common.INameDAO;
+import pl.wicia.projector.database.services.common.ServiceBase;
 
 /**
  * @TODO: Add class description
@@ -21,33 +22,15 @@ import pl.wicia.projector.database.common.INameDAO;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class DescriptionDAO implements INameDAO<Long, DescriptionEntity> {
+public class DescriptionDAO 
+        extends ServiceBase<DescriptionEntity>
+        implements INameDAO<Long, DescriptionEntity> {
 
     private SessionFactory factory;
 
     public DescriptionDAO(SessionFactory factory) {
-        this.factory = factory;
-    }
-
-    @Override
-    public List<DescriptionEntity> getAll() {
-        List<DescriptionEntity> list = null;
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            list = session.createCriteria(DescriptionEntity.class).list();
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return list;
+        super(factory);
+        super.setTypeClass(DescriptionEntity.class); //TODO: refactoring?
     }
 
     @Override
@@ -73,63 +56,6 @@ public class DescriptionDAO implements INameDAO<Long, DescriptionEntity> {
         }
         
         return entity;
-    }
-
-    @Override
-    public void update(DescriptionEntity element) {
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.update(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public void delete(DescriptionEntity element) {
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.delete(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public Long add(DescriptionEntity element){
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.persist(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-            throw ex;
-        } 
-        finally {
-            session.close();
-        }
-        
-        return element.getId();
     }
 
     @Override

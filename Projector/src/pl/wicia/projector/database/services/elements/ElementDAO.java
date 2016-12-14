@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.element.ElementEntity;
 import pl.wicia.projector.database.common.INameDAO;
+import pl.wicia.projector.database.services.common.ServiceBase;
 
 /**
  * @TODO: Add class description
@@ -20,33 +21,15 @@ import pl.wicia.projector.database.common.INameDAO;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class ElementDAO implements INameDAO<Long, ElementEntity> {
+public class ElementDAO 
+        extends ServiceBase<ElementEntity>
+        implements INameDAO<Long, ElementEntity> {
 
     private SessionFactory factory;
 
     public ElementDAO(SessionFactory factory) {
-        this.factory = factory;
-    }
-
-    @Override
-    public List<ElementEntity> getAll() {
-        List<ElementEntity> list = null;
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            list = session.createCriteria(ElementEntity.class).list();
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return list;
+        super(factory);
+        super.setTypeClass(ElementEntity.class); //TODO: refactoring?
     }
 
     @Override
@@ -72,63 +55,6 @@ public class ElementDAO implements INameDAO<Long, ElementEntity> {
         }
         
         return entity;
-    }
-
-    @Override
-    public void update(ElementEntity element) {
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.update(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public void delete(ElementEntity element) {
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.delete(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public Long add(ElementEntity element) throws Exception{
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.save(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-            throw ex;
-        } 
-        finally {
-            session.close();
-        }
-        
-        return element.getId();
     }
 
     @Override

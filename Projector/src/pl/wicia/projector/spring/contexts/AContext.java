@@ -12,6 +12,6 @@ package pl.wicia.projector.spring.contexts;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class AbstractContext {
+public class AContext {
     public static final String PATH = "pl/wicia/projector/spring/resources/";
 }

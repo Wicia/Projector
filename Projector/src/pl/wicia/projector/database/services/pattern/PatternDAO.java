@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.pattern.PatternEntity;
 import pl.wicia.projector.database.common.INameDAO;
+import pl.wicia.projector.database.services.common.ServiceBase;
 
 /**
  * @TODO: Add class description
@@ -20,33 +21,15 @@ import pl.wicia.projector.database.common.INameDAO;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class PatternDAO implements INameDAO<Long, PatternEntity> {
+public class PatternDAO  
+        extends ServiceBase<PatternEntity>
+        implements INameDAO<Long, PatternEntity> {
 
     private SessionFactory factory;
 
     public PatternDAO(SessionFactory factory) {
-        this.factory = factory;
-    }
-
-    @Override
-    public List<PatternEntity> getAll() {
-        List<PatternEntity> list = null;
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            list = session.createCriteria(PatternEntity.class).list();
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return list;
+        super(factory);
+        super.setTypeClass(PatternEntity.class); //TODO: refactoring?
     }
 
     @Override
@@ -72,63 +55,6 @@ public class PatternDAO implements INameDAO<Long, PatternEntity> {
         }
         
         return entity;
-    }
-
-    @Override
-    public void update(PatternEntity element) {
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.update(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public void delete(PatternEntity element) {
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.delete(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public Long add(PatternEntity element) throws Exception{
-        Session session = this.factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.persist(element);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-            throw ex;
-        } 
-        finally {
-            session.close();
-        }
-        
-        return element.getId();
     }
 
     @Override

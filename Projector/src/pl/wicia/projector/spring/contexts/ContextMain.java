@@ -20,7 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 //TODO Czy można jakoś inaczej pogrupować klasy w programie w context aby od razu wszystkich nie wczytywać?
 //TODO Zrobić super klasę ze ścieżką dostępu do wszystkich xmli
 public class ContextMain 
-        extends AbstractContext
+        extends AContext
         implements ApplicationContextAware {
 
     public static final String FILE_NAME = "spring-config.xml";

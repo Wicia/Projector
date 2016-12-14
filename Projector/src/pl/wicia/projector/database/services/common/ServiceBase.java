@@ -53,4 +53,55 @@ public abstract class ServiceBase<ElementType> {
         return list;
     }
     
+    public void update(ElementType element) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(element);
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+        } 
+        finally {
+            session.close();
+        }
+    }
+
+    public void delete(ElementType element) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.delete(element);
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+        } 
+        finally {
+            session.close();
+        }
+    }
+
+    public void add(ElementType element){
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.persist(element);
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            throw ex;
+        } 
+        finally {
+            session.close();
+        }
+    }
 }

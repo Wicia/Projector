@@ -20,7 +20,7 @@ import pl.wicia.projector.common.settings.AppSettings;
  */
 //TODO Czy można jakoś inaczej pogrupować klasy w programie w context aby od razu wszystkich nie wczytywać?
 public class ContextSettings 
-        extends AbstractContext
+        extends AContext
         implements ApplicationContextAware {
 
     public static final String FILE_NAME = "app-settings.xml";
