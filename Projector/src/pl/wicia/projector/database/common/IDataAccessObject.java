@@ -26,6 +26,7 @@ public interface IDataAccessObject<TypeID, TypeElement> {
     
     // Collections
     public List<TypeElement> getAll();
+    public void deleteCollection(Collection<TypeElement> collection);
     public void addCollection(Collection<TypeElement> collection);
     public void updateCollection(Collection<TypeElement> collection);
 }

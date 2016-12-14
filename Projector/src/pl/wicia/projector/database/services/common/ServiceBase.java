@@ -6,10 +6,13 @@
 
 package pl.wicia.projector.database.services.common;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import pl.wicia.projector.database.entities.description.DescriptionEntity;
 
 /**
  * @param <ElementType>
@@ -93,6 +96,93 @@ public abstract class ServiceBase<ElementType> {
         try {
             tx = session.beginTransaction();
             session.persist(element);
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            throw ex;
+        } 
+        finally {
+            session.close();
+        }
+    }
+    
+    public void addCollection(Collection<ElementType> collection) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            
+            Iterator<ElementType> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.save(iterator.next());
+                if(number % 10 == 0){
+                    session.flush();
+                    session.clear();
+                }
+                number++;
+            }
+            
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            throw ex;
+        } 
+        finally {
+            session.close();
+        }
+    }
+
+    public void updateCollection(Collection<ElementType> collection) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            
+            Iterator<ElementType> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.update(iterator.next());
+                if(number % 10 == 0){
+                    session.flush();
+                    session.clear();
+                }
+                number++;
+            }
+            
+            tx.commit();
+        } 
+        catch (Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            throw ex;
+        } 
+        finally {
+            session.close();
+        }
+    }
+
+    public void deleteCollection(Collection<ElementType> collection) {
+        Session session = this.factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            
+            Iterator<ElementType> iterator = collection.iterator();
+            int number = 0;
+            while(iterator.hasNext()){
+                session.delete(iterator.next());
+                if(number % 10 == 0){
+                    session.flush();
+                    session.clear();
+                }
+                number++;
+            }
+            
             tx.commit();
         } 
         catch (Exception ex) {

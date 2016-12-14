@@ -6,6 +6,7 @@
 package pl.wicia.projector.spring.contexts;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -38,5 +39,9 @@ public class ContextMain
 
     public static ApplicationContext getApplicationContext() {
         return context;
+    }
+    
+    public static PropertiesFactoryBean getProperties(){
+        return (PropertiesFactoryBean)context.getBean("hibernateProperties");
     }
 }

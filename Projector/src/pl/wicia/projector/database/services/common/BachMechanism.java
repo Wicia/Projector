@@ -23,7 +23,7 @@ public class BachMechanism {
     }
     
     public void batchUpdate(Session session){
-        if (number % 10 == 0 && number > 0) {
+        if (number % BATCH_SIZE == 0 && number > 0) {
             session.flush();
             session.clear();
         }

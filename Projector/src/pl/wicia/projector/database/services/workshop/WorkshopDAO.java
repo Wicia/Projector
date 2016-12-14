@@ -102,14 +102,4 @@ public class WorkshopDAO
         
         return list;
     }
-
-    @Override
-    public void addCollection(Collection<WorkshopEntity> collection) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void updateCollection(Collection<WorkshopEntity> collection) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
