@@ -12,28 +12,32 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import pl.wicia.projector.database.entities.description.DescriptionEntity;
 
 /**
+ * Class representing core for all DAO classes.
+ * 
  * @param <ElementType>
- * @TODO: Add description to: class, fields, methods
+ * 
  * @author Michał 'Wicia' Wietecha
  */
-public abstract class ServiceBase<ElementType> {
+public abstract class DAOBase<ElementType> {
     
     private SessionFactory factory;
     private Class<?> type; 
+    private Batcher batcher;
     
-    public ServiceBase(SessionFactory factory){
+    public DAOBase(SessionFactory factory, Class type, Batcher batcher){
         this.factory = factory;
-    }
-    
-    public void setTypeClass(Class<?> type){
         this.type = type;
+        this.batcher = batcher;
     }
     
     public SessionFactory getSessionFactory(){
         return this.factory;
+    }
+
+    public Batcher getBatchMechanism() {
+        return batcher;
     }
     
     public List<ElementType> getAll() {
@@ -115,14 +119,10 @@ public abstract class ServiceBase<ElementType> {
             tx = session.beginTransaction();
             
             Iterator<ElementType> iterator = collection.iterator();
-            int number = 0;
+            this.batcher.beginWork();
             while(iterator.hasNext()){
                 session.save(iterator.next());
-                if(number % 10 == 0){
-                    session.flush();
-                    session.clear();
-                }
-                number++;
+                this.batcher.batchUpdate(session);
             }
             
             tx.commit();
@@ -144,14 +144,10 @@ public abstract class ServiceBase<ElementType> {
             tx = session.beginTransaction();
             
             Iterator<ElementType> iterator = collection.iterator();
-            int number = 0;
+            this.batcher.beginWork();
             while(iterator.hasNext()){
                 session.update(iterator.next());
-                if(number % 10 == 0){
-                    session.flush();
-                    session.clear();
-                }
-                number++;
+                this.batcher.batchUpdate(session);
             }
             
             tx.commit();
@@ -173,14 +169,10 @@ public abstract class ServiceBase<ElementType> {
             tx = session.beginTransaction();
             
             Iterator<ElementType> iterator = collection.iterator();
-            int number = 0;
+            this.batcher.beginWork();
             while(iterator.hasNext()){
                 session.delete(iterator.next());
-                if(number % 10 == 0){
-                    session.flush();
-                    session.clear();
-                }
-                number++;
+                this.batcher.batchUpdate(session);
             }
             
             tx.commit();

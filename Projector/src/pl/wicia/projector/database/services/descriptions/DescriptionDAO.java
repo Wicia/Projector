@@ -6,7 +6,6 @@
 package pl.wicia.projector.database.services.descriptions;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,7 +13,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.common.INameDAO;
-import pl.wicia.projector.database.services.common.ServiceBase;
+import pl.wicia.projector.database.services.common.Batcher;
+import pl.wicia.projector.database.services.common.DAOBase;
 
 /**
  * @TODO: Add class description
@@ -23,20 +23,17 @@ import pl.wicia.projector.database.services.common.ServiceBase;
  * @author Michał 'Wicia' Wietecha
  */
 public class DescriptionDAO 
-        extends ServiceBase<DescriptionEntity>
+        extends DAOBase<DescriptionEntity>
         implements INameDAO<Long, DescriptionEntity> {
 
-    private SessionFactory factory;
-
-    public DescriptionDAO(SessionFactory factory) {
-        super(factory);
-        super.setTypeClass(DescriptionEntity.class); //TODO: refactoring?
+    public DescriptionDAO(SessionFactory factory, Class clazz, Batcher batcher) {
+        super(factory, clazz, batcher);
     }
 
     @Override
     public DescriptionEntity get(Long id) {
         DescriptionEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -61,7 +58,7 @@ public class DescriptionDAO
     @Override
     public DescriptionEntity getByName(String name){
         DescriptionEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();

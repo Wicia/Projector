@@ -6,7 +6,6 @@
 package pl.wicia.projector.database.services.props;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,7 +13,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.props.PropEntity;
 import pl.wicia.projector.database.common.INameDAO;
-import pl.wicia.projector.database.services.common.ServiceBase;
+import pl.wicia.projector.database.services.common.Batcher;
+import pl.wicia.projector.database.services.common.DAOBase;
 
 /**
  * @TODO: Add class description
@@ -23,12 +23,11 @@ import pl.wicia.projector.database.services.common.ServiceBase;
  * @author Michał 'Wicia' Wietecha
  */
 public class PropsDAO 
-        extends ServiceBase<PropEntity>
+        extends DAOBase<PropEntity>
         implements INameDAO<Long, PropEntity> {
 
-    public PropsDAO(SessionFactory factory) {
-        super(factory);
-        super.setTypeClass(PropEntity.class);
+    public PropsDAO(SessionFactory factory, Class clazz, Batcher batcher) {
+        super(factory, clazz, batcher);
     }
     
     @Override

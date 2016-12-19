@@ -16,9 +16,8 @@
 
     <!-- DB UTILS -->
     <bean id="Batcher" 
-          class="pl.wicia.projector.database.services.common.BachMechanism" 
-          scope="prototype">
-        <constructor-arg name="properties" ref="HibernatePropertiesWrapper"/>
+          class="pl.wicia.projector.database.services.common.Batcher" 
+          scope="prototype" autowire="constructor">
     </bean>
 
 </beans>

@@ -45,6 +45,11 @@ public class WindowManageWorkshop extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Logika vs. Kreatywność", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
 
         buttonAddElement.setText("Dodaj element");
+        buttonAddElement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddElementActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Dodaj moduł");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -54,6 +59,11 @@ public class WindowManageWorkshop extends javax.swing.JFrame {
         });
 
         jButton1.setText("Agenda");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,6 +106,15 @@ public class WindowManageWorkshop extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void buttonAddElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddElementActionPerformed
+        WindowElement.open();
+        this.dispose();
+    }//GEN-LAST:event_buttonAddElementActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
         
     //TODO: Jak to profesjonalnie zorganizować + refactroring innych metod tego typu
     public static void open(){

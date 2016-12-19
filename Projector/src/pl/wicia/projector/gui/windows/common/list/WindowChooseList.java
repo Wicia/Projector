@@ -19,6 +19,7 @@ import pl.wicia.projector.common.settings.AppSettings;
 import pl.wicia.projector.common.settings.AppSettings.PropertyName;
 import pl.wicia.projector.gui.windows.common.tables.DynamicTableModel;
 import pl.wicia.projector.gui.windows.menu.WindowMenu;
+import pl.wicia.projector.gui.windows.modify.WindowManageWorkshop;
 
 /**
  *
@@ -125,7 +126,7 @@ public class WindowChooseList extends javax.swing.JFrame {
                 AppSettings s = ContextSettings.getAppSettings();
                 s.addProperty(PropertyName.WorkshopName, workshopName);
                 s.addProperty(PropertyName.WorkshopID, workshopID);
-                WindowMenu.open();
+                WindowManageWorkshop.open();
                 this.dispose();
             }
         } 
@@ -165,7 +166,8 @@ public class WindowChooseList extends javax.swing.JFrame {
             this.fillTable(allWorkshops);
         } 
         catch (Exception ex) {
-            dialogs.show(new DialogError("Błąd!", ex.getMessage()));
+            dialogs.show(new DialogError("Błąd!", ex.getCause().toString()));
+            System.out.println(ex.getMessage());
         }
     }
 

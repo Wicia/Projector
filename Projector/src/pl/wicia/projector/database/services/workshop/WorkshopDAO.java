@@ -13,7 +13,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.workshop.WorkshopEntity;
 import pl.wicia.projector.database.common.INameDAO;
-import pl.wicia.projector.database.services.common.ServiceBase;
+import pl.wicia.projector.database.services.common.Batcher;
+import pl.wicia.projector.database.services.common.DAOBase;
 
 /**
  * @TODO: Add class description
@@ -22,12 +23,11 @@ import pl.wicia.projector.database.services.common.ServiceBase;
  * @author Michał 'Wicia' Wietecha
  */
 public class WorkshopDAO 
-        extends ServiceBase<WorkshopEntity>
+        extends DAOBase<WorkshopEntity>
         implements INameDAO<Long, WorkshopEntity> {
 
-    public WorkshopDAO(SessionFactory factory) {
-        super(factory);
-        super.setTypeClass(WorkshopEntity.class); //TODO: refactoring?
+    public WorkshopDAO(SessionFactory factory, Class clazz, Batcher batcher) {
+        super(factory, clazz, batcher);
     }
     
     @Override

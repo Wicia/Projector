@@ -13,12 +13,12 @@ import org.hibernate.Session;
  * 
  * @author Michał 'Wicia' Wietecha
  */
-public class BachMechanism {
+public class Batcher {
     
     private int BATCH_SIZE;
     private int number;
     
-    public BachMechanism(HibernatePropertiesWrapper properties){
+    public Batcher(HibernatePropertiesWrapper properties){
         this.BATCH_SIZE = properties.getBatchSize();
         this.number = 0;
     }
@@ -29,5 +29,9 @@ public class BachMechanism {
             session.clear();
         }
         number++;
+    }
+    
+    public void beginWork(){
+       this.number = 0; 
     }
 }

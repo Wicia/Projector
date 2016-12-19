@@ -32,7 +32,6 @@ public class WorkshopService{
         this.dao = dao;
     }
     
-    //TODO Kiedy powinna być walidacja? tutaj czy na pozimie metody wywyłującej?
     public void addWorkshop(WorkshopEntity entity) 
             throws ExceptionDuplicateEntity, Exception{
         WorkshopEntity dbEntity = this.dao.getByName(entity.getName());

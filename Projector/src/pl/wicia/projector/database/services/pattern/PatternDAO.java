@@ -13,7 +13,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.pattern.PatternEntity;
 import pl.wicia.projector.database.common.INameDAO;
-import pl.wicia.projector.database.services.common.ServiceBase;
+import pl.wicia.projector.database.services.common.Batcher;
+import pl.wicia.projector.database.services.common.DAOBase;
 
 /**
  * @TODO: Add class description
@@ -22,20 +23,17 @@ import pl.wicia.projector.database.services.common.ServiceBase;
  * @author Michał 'Wicia' Wietecha
  */
 public class PatternDAO  
-        extends ServiceBase<PatternEntity>
+        extends DAOBase<PatternEntity>
         implements INameDAO<Long, PatternEntity> {
 
-    private SessionFactory factory;
-
-    public PatternDAO(SessionFactory factory) {
-        super(factory);
-        super.setTypeClass(PatternEntity.class); //TODO: refactoring?
+    public PatternDAO(SessionFactory factory, Class clazz, Batcher batcher) {
+        super(factory, clazz, batcher);
     }
 
     @Override
     public PatternEntity get(Long id) {
         PatternEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -60,7 +58,7 @@ public class PatternDAO
     @Override
     public PatternEntity getByName(String name){
         PatternEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();

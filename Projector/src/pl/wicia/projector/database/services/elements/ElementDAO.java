@@ -13,7 +13,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.element.ElementEntity;
 import pl.wicia.projector.database.common.INameDAO;
-import pl.wicia.projector.database.services.common.ServiceBase;
+import pl.wicia.projector.database.services.common.Batcher;
+import pl.wicia.projector.database.services.common.DAOBase;
 
 /**
  * @TODO: Add class description
@@ -22,20 +23,17 @@ import pl.wicia.projector.database.services.common.ServiceBase;
  * @author Michał 'Wicia' Wietecha
  */
 public class ElementDAO 
-        extends ServiceBase<ElementEntity>
+        extends DAOBase<ElementEntity>
         implements INameDAO<Long, ElementEntity> {
 
-    private SessionFactory factory;
-
-    public ElementDAO(SessionFactory factory) {
-        super(factory);
-        super.setTypeClass(ElementEntity.class); //TODO: refactoring?
+    public ElementDAO(SessionFactory factory, Class clazz, Batcher batcher) {
+        super(factory, clazz, batcher);
     }
 
     @Override
     public ElementEntity get(Long id) {
         ElementEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -60,7 +58,7 @@ public class ElementDAO
     @Override
     public ElementEntity getByName(String name){
         ElementEntity entity = null;
-        Session session = this.factory.openSession();
+        Session session = this.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();

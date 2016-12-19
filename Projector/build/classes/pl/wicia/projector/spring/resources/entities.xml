@@ -22,5 +22,12 @@
         <value>pl/wicia/projector/database/entities/props/PropEntity.hbm.xml</value>
         <value>pl/wicia/projector/database/entities/description/DescriptionEntity.hbm.xml</value>
     </util:list>
-   
+    
+    <!-- POJO CLASSES -->
+    <bean id="WorkshopEntity" class="pl.wicia.projector.database.entities.workshop.WorkshopEntity"/>
+    <bean id="PatternEntity" class="pl.wicia.projector.database.entities.pattern.PatternEntity"/>
+    <bean id="ElementEntity" class="pl.wicia.projector.database.entities.element.ElementEntity"/>
+    <bean id="PropEntity" class="pl.wicia.projector.database.entities.props.PropEntity"/>
+    <bean id="DescriptionEntity" class="pl.wicia.projector.database.entities.description.DescriptionEntity"/>
+
 </beans>
