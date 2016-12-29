@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 
-package pl.wicia.projector.database.entities.pattern;
+package pl.wicia.projector.database.entities.patterns.element;
+
+import java.util.HashSet;
+import java.util.Set;
+import pl.wicia.projector.database.entities.patterns.props.PropPatternEntity;
 
 /**
  * @TODO: Add class description
@@ -12,7 +16,7 @@ package pl.wicia.projector.database.entities.pattern;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class PatternEntity implements java.io.Serializable{
+public class ElementPatternEntity implements java.io.Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -20,15 +24,18 @@ public class PatternEntity implements java.io.Serializable{
     private String name; 
     private String necessary; 
     
-    public PatternEntity() {
+    // Relations fields
+    private Set<PropPatternEntity> props = new HashSet<>(0);
+    
+    public ElementPatternEntity() {
     }
 
-    public PatternEntity(String name, String necessary){
+    public ElementPatternEntity(String name, String necessary){
         this.name = name;
         this.necessary = necessary;
     }
     
-    public PatternEntity(int id, String name, String necessary) {
+    public ElementPatternEntity(int id, String name, String necessary) {
         this(name, necessary);
         this.id = id;
     }
@@ -55,5 +62,13 @@ public class PatternEntity implements java.io.Serializable{
 
     public void setNecessary(String necessary) {
         this.necessary = necessary;
+    }
+
+    public Set<PropPatternEntity> getProps() {
+        return props;
+    }
+
+    public void setProps(Set<PropPatternEntity> props) {
+        this.props = props;
     }
 }

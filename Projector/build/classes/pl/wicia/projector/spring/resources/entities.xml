@@ -17,7 +17,8 @@
     <!-- RESOURCES -->
     <util:list id="HibernateEntities" value-type="java.lang.String">
         <value>pl/wicia/projector/database/entities/workshop/WorkshopEntity.hbm.xml</value>
-        <value>pl/wicia/projector/database/entities/pattern/PatternEntity.hbm.xml</value>
+        <value>pl/wicia/projector/database/entities/patterns/element/ElementPatternEntity.hbm.xml</value>
+        <value>pl/wicia/projector/database/entities/patterns/props/PropPatternEntity.hbm.xml</value>
         <value>pl/wicia/projector/database/entities/element/ElementEntity.hbm.xml</value>
         <value>pl/wicia/projector/database/entities/props/PropEntity.hbm.xml</value>
         <value>pl/wicia/projector/database/entities/description/DescriptionEntity.hbm.xml</value>
@@ -25,7 +26,8 @@
     
     <!-- POJO CLASSES -->
     <bean id="WorkshopEntity" class="pl.wicia.projector.database.entities.workshop.WorkshopEntity"/>
-    <bean id="PatternEntity" class="pl.wicia.projector.database.entities.pattern.PatternEntity"/>
+    <bean id="ElementPatternEntity" class="pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity"/>
+    <bean id="PropPatternEntity" class="pl.wicia.projector.database.entities.patterns.props.PropPatternEntity"/>
     <bean id="ElementEntity" class="pl.wicia.projector.database.entities.element.ElementEntity"/>
     <bean id="PropEntity" class="pl.wicia.projector.database.entities.props.PropEntity"/>
     <bean id="DescriptionEntity" class="pl.wicia.projector.database.entities.description.DescriptionEntity"/>

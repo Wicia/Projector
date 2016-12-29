@@ -7,6 +7,7 @@
 package pl.wicia.projector.database.entities.props;
 
 import pl.wicia.projector.database.entities.element.ElementEntity;
+import pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity;
 import pl.wicia.projector.gui.windows.elements.data.props.PropsTableRow;
 
 /**

@@ -18,7 +18,7 @@ public class TASKS {
         //TODO: ServiceBase + mechanizm batchy
         //TODO: Może do plików Entity zastosować wzorzec Dekorator?
         //TODO: dorobić mapowanie kolekcji do pozostałych klas entity
-        //TODO: stworzyć wrappery na obiekty entity
+        //TODO: wykorzystać wrappery w serwisach
         //TODO: dorobić obiekt BatchUpdater(index, size, session)
         //TODO: superklasa używająca JFRAME + mając obiekt do wyświetlania dialogów
         //TODO: Services/sprawdzić, czy metody update'ujące operują na małej ilości danych (nie ma wyciągania z bazy i update'u na dużej liczbie danych)

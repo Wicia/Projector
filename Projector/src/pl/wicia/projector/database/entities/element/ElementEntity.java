@@ -7,6 +7,7 @@
 package pl.wicia.projector.database.entities.element;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,5 +81,13 @@ public class ElementEntity implements java.io.Serializable{
 
     public void setProps(Set<PropEntity> props) {
         this.props = props;
+    }
+    
+    public void linkWithDescriptions(Collection<DescriptionEntity> descriptions){
+        descriptions.stream().forEach((DescriptionEntity e) -> (e.setElement(this)));
+    }
+    
+    public void linkWithProps(Collection<PropEntity> props){
+        props.stream().forEach((PropEntity e) -> (e.setElement(this)));
     }
 }

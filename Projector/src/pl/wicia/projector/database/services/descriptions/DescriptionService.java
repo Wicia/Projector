@@ -12,9 +12,8 @@ import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.spring.contexts.ContextMain;
 
 /**
- * @TODO: Add class description
- * @TODO: Add descrptions to fields
- * @TODO: Add descrptions to methods
+ * Class storing operations on TAB_DESCRIPTION table.
+ * 
  * @author Michał 'Wicia' Wietecha
  */
 public class DescriptionService{

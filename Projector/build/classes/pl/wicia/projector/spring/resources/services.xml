@@ -30,14 +30,26 @@
         <constructor-arg name="dao" ref="WorkshopDAO"/>
     </bean>
     
-    <!-- PATTERNS -->
-    <bean id="PatternDAO" class="pl.wicia.projector.database.services.pattern.PatternDAO" 
+    <!-- PATTERN - ELEMENT -->
+    <bean id="ElementPatternDAO" class="pl.wicia.projector.database.services.patterns.element.ElementPatternDAO" 
           parent="DAOBase" scope="prototype" autowire="constructor">
-        <constructor-arg name="clazz" value="#{PatternDAO.class}"/>
+        <constructor-arg name="clazz" value="#{ElementPatternEntity.class}"/>
     </bean>
-    <bean id="PatternService" class="pl.wicia.projector.database.services.pattern.PatternService" 
+    <bean id="ElementPatternService" class="pl.wicia.projector.database.services.patterns.element.ElementPatternService" 
           scope="prototype">
-        <constructor-arg name="dao" ref="PatternDAO"/>
+        <constructor-arg name="dao" ref="ElementPatternDAO"/>
+    </bean>
+    
+    <!-- PATTERN - PROPS -->
+    <bean id="PropsPatternDAO" 
+          class="pl.wicia.projector.database.services.patterns.props.PropsPatternDAO" 
+          parent="DAOBase" scope="prototype" autowire="constructor">
+        <constructor-arg name="clazz" value="#{ElementPatternEntity.class}"/>
+    </bean>
+    <bean id="PropsPatternService" 
+          class="pl.wicia.projector.database.services.patterns.props.PropsPatternService" 
+          scope="prototype">
+        <constructor-arg name="dao" ref="PropsPatternDAO"/>
     </bean>
     
     <!-- ELEMENTS -->

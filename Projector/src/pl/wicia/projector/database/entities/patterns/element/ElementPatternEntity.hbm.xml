@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity" 
+          table="TAB_PATT_ELEMENTS">
+      <meta attribute="class-description">
+         This class contains definition of elements patterns. 
+      </meta>
+      <id name="id" type="long" column="id">
+         <generator class="native"/>
+      </id>
+      <property name="name" column="name" type="string"/>
+      <set name="props" table="TAB_PATT_PROPS" lazy="false" inverse="true" cascade="all">
+          <key column="id_element" not-null="true"/>
+          <one-to-many class="pl.wicia.projector.database.entities.patterns.props.PropPatternEntity"/>
+      </set>
+   </class>
+   
+    <query name="findElementPatternByName">
+        FROM ElementPatternEntity WHERE name = :name
+    </query>
+    
+    <query name="findElementPatternByID">
+        FROM ElementPatternEntity WHERE id = :id
+    </query>
+   
+</hibernate-mapping>

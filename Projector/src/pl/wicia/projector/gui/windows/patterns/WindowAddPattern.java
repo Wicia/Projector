@@ -6,8 +6,8 @@
 package pl.wicia.projector.gui.windows.patterns;
 
 import java.awt.EventQueue;
-import pl.wicia.projector.database.entities.pattern.PatternEntity;
-import pl.wicia.projector.database.services.pattern.PatternService;
+import pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity;
+import pl.wicia.projector.database.services.patterns.element.ElementPatternService;
 import pl.wicia.projector.gui.utils.dialogs.types.DialogError;
 import pl.wicia.projector.gui.utils.dialogs.types.DialogInfo;
 import pl.wicia.projector.gui.utils.dialogs.UtilsDialogs;
@@ -150,10 +150,10 @@ public class WindowAddPattern extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void onAddingPattern(String patternName, String necessary){
-        PatternEntity entity = new PatternEntity(patternName, necessary);
+        ElementPatternEntity entity = new ElementPatternEntity(patternName, necessary);
         try {
             // TODO Gdzie to ma być inicjalizowane i zapisywane?
-            PatternService bean = PatternService.getService();
+            ElementPatternService bean = ElementPatternService.getService();
             bean.addPattern(entity);
             dialogs.show(new DialogInfo("Sukces!", "Wzorzec elementu dodano do bazy danych.")); 
         } 

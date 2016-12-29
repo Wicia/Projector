@@ -12,9 +12,10 @@
         <id name="id" type="long" column="id">
             <generator class="native"/>
         </id>
-        <many-to-one name="element" class="pl.wicia.projector.database.entities.element.ElementEntity" fetch="select">
-            <column name="id_element" not-null="true" />
-        </many-to-one>
+        <many-to-one 
+            name="element" column="id_element"
+            class="pl.wicia.projector.database.entities.element.ElementEntity" 
+            not-null="true" fetch="select"/>
         <property name="name" column="name" type="string" not-null="false"/>
         <property name="count" column="count" type="byte" not-null="false"/>
     </class>

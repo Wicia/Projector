@@ -370,13 +370,13 @@ public class WindowElement extends javax.swing.JFrame {
 
         // Update DESCRIPTIONS = DELETE ALL AND INSERT NEW
         List<DescriptionEntity> listDescs = modelDescriptions.getListEntities();
-        listDescs.stream().forEach((DescriptionEntity e) -> (e.setElement(choosenElement)));
+        this.choosenElement.linkWithDescriptions(listDescs);
         DescriptionService.getService().deleteCollectionDescriptions(listDescs);
         DescriptionService.getService().addCollectionDescriptions(listDescs);
 
         // Update PROPS = DELETE ALL AND INSERT NEW
-        HashSet<PropEntity> setProps = new HashSet<>(modelProps.getListEntities());
-        setProps.stream().forEach((PropEntity e) -> (e.setElement(choosenElement)));
+        Set<PropEntity> setProps = new HashSet<>(modelProps.getListEntities());
+        this.choosenElement.linkWithProps(setProps);
         PropsService.getService().deletePropsCollection(setProps);
         PropsService.getService().addPropsCollection(setProps);
 
@@ -388,23 +388,18 @@ public class WindowElement extends javax.swing.JFrame {
     }
 
     private void addNewElement() {
-        //TODO: Walidacja, potem wstawianie
-        String elementName = this.fieldElementName.getText();
-        byte time = Byte.valueOf(this.fieldTime.getText());
-
-        ElementEntity entity = new ElementEntity();
-        entity.setName(elementName);
-        entity.setTime(time);
+        
+        ElementEntity entity = this.createFromInput();
 
         // Update DESCRIPTIONS
         List<DescriptionEntity> listDescs = modelDescriptions.getListEntities();
-        listDescs.stream().forEach((DescriptionEntity e) -> (e.setElement(entity)));
+        entity.linkWithDescriptions(listDescs);
         entity.setDescriptions(listDescs);
 
         // Update PROPS
         HashSet<PropEntity> setProps = new HashSet<>(modelProps.getListEntities());
-        setProps.stream().forEach((PropEntity e) -> (e.setElement(entity)));
-        entity.setDescriptions(listDescs);
+        entity.linkWithProps(setProps);
+        entity.setProps(setProps);
 
         // Update ELEMENT
         ElementService service = ElementService.getService();
@@ -427,6 +422,18 @@ public class WindowElement extends javax.swing.JFrame {
             window.setVisible(true);
             window.setLocationRelativeTo(null);
         });
+    }
+    
+    private ElementEntity createFromInput(){
+        //TODO: Walidacja, potem wstawianie
+        String elementName = this.fieldElementName.getText();
+        byte time = Byte.valueOf(this.fieldTime.getText());
+
+        ElementEntity entity = new ElementEntity();
+        entity.setName(elementName);
+        entity.setTime(time);
+        
+        return entity;
     }
 
     private final int PROPS = 1;
