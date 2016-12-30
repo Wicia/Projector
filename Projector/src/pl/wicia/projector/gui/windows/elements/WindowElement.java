@@ -13,10 +13,15 @@ import pl.wicia.projector.gui.windows.elements.data.elements.DescriptionsTableMo
 import javax.swing.SwingUtilities;
 import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.entities.element.ElementEntity;
+import pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity;
+import pl.wicia.projector.database.entities.patterns.props.PropPatternEntity;
 import pl.wicia.projector.database.entities.props.PropEntity;
 import pl.wicia.projector.database.services.descriptions.DescriptionService;
 import pl.wicia.projector.database.services.elements.ElementService;
+import pl.wicia.projector.database.services.patterns.element.ElementPatternService;
 import pl.wicia.projector.database.services.props.PropsService;
+import pl.wicia.projector.gui.windows.common.list.WindowChooseList;
+import pl.wicia.projector.gui.windows.elements.data.holders.ElementDataHolder;
 import pl.wicia.projector.gui.windows.elements.data.props.PropsTableModel;
 
 /**
@@ -29,12 +34,13 @@ public class WindowElement extends javax.swing.JFrame {
      * Creates new form WindowAddWorkshop
      */
     public WindowElement() {
+        this.initData();
         this.initComponents();
         this.fillComponents();
     }
 
     public WindowElement(long choosenElemenID) {
-        this.initElement(choosenElemenID);
+        this.initData(choosenElemenID);
         this.initComponents();
         this.fillComponents();
     }
@@ -44,15 +50,21 @@ public class WindowElement extends javax.swing.JFrame {
         this.initTableProps();
     }
 
-    private void initElement(long elementID) {
+    private void initData(){
+        this.data = new ElementDataHolder(this);
+    }
+    
+    private void initData(long elementID) {
+        this.initData();
         ElementService service = ElementService.getService();
-        this.choosenElement = service.getElementByID(elementID);
+        this.data.setChoosenElement(service.getElementByID(elementID));
     }
 
     private void initTableDescriptions() {
         this.modelDescriptions = DescriptionsTableModel.loadModel(tableDescriptions);
-        if (this.choosenElement != null) {
-            List<DescriptionEntity> descriptions = this.choosenElement.getDescriptions();
+        ElementEntity element = this.data.getChoosenElement();
+        if (element != null) {
+            List<DescriptionEntity> descriptions = element.getDescriptions();
             for (DescriptionEntity desc : descriptions) {
                 this.modelDescriptions.addNewRow(desc);
             }
@@ -61,8 +73,9 @@ public class WindowElement extends javax.swing.JFrame {
 
     private void initTableProps() {
         this.modelProps = PropsTableModel.loadModel(tableProps);
-        if (this.choosenElement != null) {
-            Set<PropEntity> descriptions = this.choosenElement.getProps();
+        ElementEntity element = this.data.getChoosenElement();
+        if (element != null) {
+            Set<PropEntity> descriptions = element.getProps();
             for (PropEntity prop : descriptions) {
                 this.modelProps.addNewRow(prop);
             }
@@ -105,6 +118,11 @@ public class WindowElement extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(40, 120, 115));
 
         comboPatterns.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{}));
+        comboPatterns.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboPatternsMouseClicked(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -306,7 +324,7 @@ public class WindowElement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        if (this.choosenElement != null) {
+        if (this.data.getChoosenElement() != null) {
             this.updateExistingElement();
         } else {
             this.addNewElement();
@@ -365,24 +383,30 @@ public class WindowElement extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonAddElementActionPerformed
 
+    private void comboPatternsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboPatternsMouseClicked
+        WindowChooseList.open(ElementPatternEntity.class, this);
+    }//GEN-LAST:event_comboPatternsMouseClicked
+
     //TODO: coś z tym zrobić - na inna warstwe danych?
     private void updateExistingElement() {
 
+        ElementEntity choosenElement = this.data.getChoosenElement();
+        
         // Update DESCRIPTIONS = DELETE ALL AND INSERT NEW
         List<DescriptionEntity> listDescs = modelDescriptions.getListEntities();
-        this.choosenElement.linkWithDescriptions(listDescs);
+        choosenElement.linkWithDescriptions(listDescs);
         DescriptionService.getService().deleteCollectionDescriptions(listDescs);
         DescriptionService.getService().addCollectionDescriptions(listDescs);
 
         // Update PROPS = DELETE ALL AND INSERT NEW
         Set<PropEntity> setProps = new HashSet<>(modelProps.getListEntities());
-        this.choosenElement.linkWithProps(setProps);
+        choosenElement.linkWithProps(setProps);
         PropsService.getService().deletePropsCollection(setProps);
         PropsService.getService().addPropsCollection(setProps);
 
         // Update ELEMENT
         ElementService service = ElementService.getService();
-        service.updateElement(this.choosenElement);
+        service.updateElement(choosenElement);
 
         this.clearData();
     }
@@ -403,7 +427,7 @@ public class WindowElement extends javax.swing.JFrame {
 
         // Update ELEMENT
         ElementService service = ElementService.getService();
-        service.updateElement(this.choosenElement);
+        service.updateElement(this.data.getChoosenElement());
 
         this.clearData();
     }
@@ -424,6 +448,15 @@ public class WindowElement extends javax.swing.JFrame {
         });
     }
     
+    public void onPatternIDChange(long patternID) {
+        ElementPatternService service = ElementPatternService.getService();
+        ElementPatternEntity patternByID = service.getPatternByID(patternID);
+        Set<PropPatternEntity> props = patternByID.getProps();
+        props.stream().forEach((PropPatternEntity e) -> {
+            this.modelProps.addNewRow(new PropEntity(e));
+        });
+    }
+    
     private ElementEntity createFromInput(){
         //TODO: Walidacja, potem wstawianie
         String elementName = this.fieldElementName.getText();
@@ -436,12 +469,16 @@ public class WindowElement extends javax.swing.JFrame {
         return entity;
     }
 
+    public ElementDataHolder getData() {
+        return data;
+    }
+
     private final int PROPS = 1;
     private final int DESCS = 0;
 
     private DescriptionsTableModel modelDescriptions;
     private PropsTableModel modelProps;
-    private ElementEntity choosenElement;
+    private ElementDataHolder data;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAddElement;
@@ -471,6 +508,6 @@ public class WindowElement extends javax.swing.JFrame {
         this.modelProps.clearData();
         this.fieldElementName.setText("");
         this.fieldTime.setText("");
-        this.choosenElement = null;
+        this.data = null;
     }
 }

@@ -6,9 +6,9 @@
 package pl.wicia.projector.gui.windows.common.list;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.swing.JFrame;
 import pl.wicia.projector.database.entities.workshop.WorkshopEntity;
 import pl.wicia.projector.database.services.workshop.WorkshopService;
 import pl.wicia.projector.gui.utils.dialogs.types.DialogError;
@@ -17,8 +17,11 @@ import pl.wicia.projector.gui.utils.dialogs.UtilsDialogs;
 import pl.wicia.projector.spring.contexts.ContextSettings;
 import pl.wicia.projector.common.settings.AppSettings;
 import pl.wicia.projector.common.settings.AppSettings.PropertyName;
+import pl.wicia.projector.database.entities.INameableEntity;
+import pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity;
+import pl.wicia.projector.database.services.patterns.element.ElementPatternService;
 import pl.wicia.projector.gui.windows.common.tables.DynamicTableModel;
-import pl.wicia.projector.gui.windows.menu.WindowMenu;
+import pl.wicia.projector.gui.windows.elements.WindowElement;
 import pl.wicia.projector.gui.windows.modify.WindowManageWorkshop;
 
 /**
@@ -30,11 +33,10 @@ public class WindowChooseList extends javax.swing.JFrame {
     /**
      * Creates new form WindowAddWorkshop
      */
-    public WindowChooseList(Class elementType) {
+    public WindowChooseList(Class elementType, JFrame invokingWindow) {
         this.initComponents();
         this.initDialogs();
-        this.setElementType(elementType);
-        this.onTableLoad();
+        this.initData(elementType, invokingWindow);
     }
 
     /**
@@ -114,32 +116,53 @@ public class WindowChooseList extends javax.swing.JFrame {
     private void initDialogs() {
         this.dialogs = new UtilsDialogs(this);
     }
+    
+    private void initData(Class elementType, JFrame invokingWindow) {
+        this.data = new ChooseListDataHolder(this);
+        this.data.setElementType(elementType);
+        this.data.setListInvoker(invokingWindow);
+    }
 
     private void tableDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDataMouseClicked
-        int selectedRow = this.tableData.getSelectedRow();
-        if (elementType == WorkshopEntity.class) {
-            long workshopID = Long.valueOf(this.tableData.getValueAt(selectedRow, 0).toString());
-            String workshopName = this.tableModel.getValueAt(selectedRow, 1).toString();
-            int decision = dialogs.show(new DialogQuestion("Pytanie",
-                    "Czy chcesz wybrać warsztat " + workshopName + "?", "Tak", "Anuluj"));
-            if (decision == 0) {
-                AppSettings s = ContextSettings.getAppSettings();
-                s.addProperty(PropertyName.WorkshopName, workshopName);
-                s.addProperty(PropertyName.WorkshopID, workshopID);
-                WindowManageWorkshop.open();
-                this.dispose();
-            }
+        int row = this.tableData.getSelectedRow();
+        long id = Long.valueOf(this.tableModel.getValueAt(row, 0).toString());
+        String name = this.tableModel.getValueAt(row, 1).toString();
+        if (this.data.isElementType(WorkshopEntity.class)) {
+            this.onWorkshopSelect(id, name);
         } 
-        else {
-            
-        }
+        if (this.data.isElementType(ElementPatternEntity.class)) {
+            this.onElementPatternSelect(id, name);
+        } 
     }//GEN-LAST:event_tableDataMouseClicked
 
+    private void onWorkshopSelect(long elementID, String name) {
+        int decision = dialogs.show(new DialogQuestion("Pytanie",
+                "Czy chcesz wybrać warsztat " + name + "?", "Tak", "Anuluj"));
+        if (decision == 0) {
+            AppSettings s = ContextSettings.getAppSettings();
+            s.addProperty(PropertyName.WorkshopName, name);
+            s.addProperty(PropertyName.WorkshopID, elementID);
+            WindowManageWorkshop.open();
+            this.dispose();
+        }
+    }
+    
+    private void onElementPatternSelect(long elementID, String name) {
+        int decision = dialogs.show(new DialogQuestion("Pytanie",
+                "Czy chcesz wybrać wzorzec " + name + "?", "Tak", "Anuluj"));
+        if (decision == 0) {
+            WindowElement window = (WindowElement)this.data.getListInvoker();
+            window.getData().setChoosenPatternID(elementID);
+            this.dispose();
+        }
+    }
+    
+    
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
         String searchValue = this.fieldSearch.getText();
         if(searchValue.isEmpty())
             return;
-        if(this.elementType == WorkshopEntity.class){
+        if(this.data.isElementType(WorkshopEntity.class)){
             WorkshopService service = WorkshopService.getService();
             Collection<WorkshopEntity> list = service.searchWorkshopByName(searchValue);
             if(list == null || list.isEmpty()){
@@ -147,12 +170,12 @@ public class WindowChooseList extends javax.swing.JFrame {
                         "Podany warsztat nie istnieje"));
             }
             else{
-                this.fillTable(list);
+                this.fillTable(WorkshopEntity.toCollection(list));
             }
         }
     }//GEN-LAST:event_buttonSearchActionPerformed
 
-    private void onTableLoad() {
+    public void onTableLoad() {
         // Init model
         int[] columnsWidth = new int[]{10, 90};
         String[] colNames = new String[]{"ID", "Nazwa"};
@@ -161,9 +184,16 @@ public class WindowChooseList extends javax.swing.JFrame {
 
         // Getting data
         try {
-            WorkshopService service = WorkshopService.getService();
-            List<WorkshopEntity> allWorkshops = service.getAllWorkshops();
-            this.fillTable(allWorkshops);
+            if(this.data.isElementType(WorkshopEntity.class)){
+                WorkshopService service = WorkshopService.getService();
+                List<WorkshopEntity> workshops = service.getAllWorkshops();
+                this.fillTable(WorkshopEntity.toCollection(workshops));
+            }
+            if(this.data.isElementType(ElementPatternEntity.class)){
+                ElementPatternService service = ElementPatternService.getService();
+                List<ElementPatternEntity> patterns = service.getAllPatterns();
+                this.fillTable(ElementPatternEntity.toCollection(patterns));
+            }
         } 
         catch (Exception ex) {
             dialogs.show(new DialogError("Błąd!", ex.getCause().toString()));
@@ -171,31 +201,28 @@ public class WindowChooseList extends javax.swing.JFrame {
         }
     }
 
-    private void fillTable(Collection<WorkshopEntity> allWorkshops) {
+    private void fillTable(Collection<INameableEntity> allWorkshops) {
         this.tableModel.setRowsCount(allWorkshops.size());
         int rowIndex = 0;
-        for (WorkshopEntity entity : allWorkshops) {
+        for (INameableEntity entity : allWorkshops) {
             Object[] values = new Object[]{entity.getId(), entity.getName()};
             this.tableModel.setNewRow(values, rowIndex);
             rowIndex++;
         }
     }
 
-    public static void open(Class type) {
+    public static void open(Class type, JFrame invokingWindow) {
         EventQueue.invokeLater(() -> {
-            WindowChooseList window = new WindowChooseList(type);
+            WindowChooseList window = new WindowChooseList(type, invokingWindow);
             window.setVisible(true);
             window.setLocationRelativeTo(null);
         });
     }
 
-    private void setElementType(Class elementType) {
-        this.elementType = elementType;
-    }
-
     private UtilsDialogs dialogs;
     private DynamicTableModel tableModel;
-    private Class elementType;
+    private ChooseListDataHolder data;
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonSearch;

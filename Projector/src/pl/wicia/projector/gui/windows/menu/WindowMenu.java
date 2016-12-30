@@ -196,7 +196,7 @@ public class WindowMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_labelElementsMouseEntered
 
     private void buttonManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonManageActionPerformed
-        WindowChooseList.open(WorkshopEntity.class);
+        WindowChooseList.open(WorkshopEntity.class, this);
         this.dispose();
     }//GEN-LAST:event_buttonManageActionPerformed
         

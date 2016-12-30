@@ -150,20 +150,20 @@ public class WindowAddPattern extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void onAddingPattern(String patternName, String necessary){
-        ElementPatternEntity entity = new ElementPatternEntity(patternName, necessary);
-        try {
-            // TODO Gdzie to ma być inicjalizowane i zapisywane?
-            ElementPatternService bean = ElementPatternService.getService();
-            bean.addPattern(entity);
-            dialogs.show(new DialogInfo("Sukces!", "Wzorzec elementu dodano do bazy danych.")); 
-        } 
-        catch (ExceptionDuplicateEntity ex){
-            // TODO: gdzie umieszczać stringi?
-            dialogs.show(new DialogError("Duplikat!", "Podany wzorzec już istnieje w bazie"));
-        }
-        catch(Exception ex){
-            dialogs.show(new DialogError("Błąd!", ex.getMessage()));
-        }
+//        ElementPatternEntity entity = new ElementPatternEntity(patternName, necessary);
+//        try {
+//            // TODO Gdzie to ma być inicjalizowane i zapisywane?
+//            ElementPatternService bean = ElementPatternService.getService();
+//            bean.addPattern(entity);
+//            dialogs.show(new DialogInfo("Sukces!", "Wzorzec elementu dodano do bazy danych.")); 
+//        } 
+//        catch (ExceptionDuplicateEntity ex){
+//            // TODO: gdzie umieszczać stringi?
+//            dialogs.show(new DialogError("Duplikat!", "Podany wzorzec już istnieje w bazie"));
+//        }
+//        catch(Exception ex){
+//            dialogs.show(new DialogError("Błąd!", ex.getMessage()));
+//        }
     }
     
     //TODO: Jak to profesjonalnie zorganizować + refactroring innych metod tego typu

@@ -6,9 +6,14 @@
 
 package pl.wicia.projector.database.entities.patterns.element;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import pl.wicia.projector.database.entities.INameableEntity;
 import pl.wicia.projector.database.entities.patterns.props.PropPatternEntity;
+import pl.wicia.projector.database.entities.workshop.WorkshopEntity;
 
 /**
  * @TODO: Add class description
@@ -16,13 +21,13 @@ import pl.wicia.projector.database.entities.patterns.props.PropPatternEntity;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class ElementPatternEntity implements java.io.Serializable{
+public class ElementPatternEntity 
+        implements java.io.Serializable, INameableEntity<Long>{
     
     private static final long serialVersionUID = 1L;
-    
+
     private long id;
     private String name; 
-    private String necessary; 
     
     // Relations fields
     private Set<PropPatternEntity> props = new HashSet<>(0);
@@ -30,17 +35,17 @@ public class ElementPatternEntity implements java.io.Serializable{
     public ElementPatternEntity() {
     }
 
-    public ElementPatternEntity(String name, String necessary){
+    public ElementPatternEntity(String name){
         this.name = name;
-        this.necessary = necessary;
     }
     
     public ElementPatternEntity(int id, String name, String necessary) {
-        this(name, necessary);
+        this(name);
         this.id = id;
     }
     
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
     }
     
@@ -48,20 +53,13 @@ public class ElementPatternEntity implements java.io.Serializable{
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-    
-    public String getNecessary() {
-        return necessary;
-    }
-
-    public void setNecessary(String necessary) {
-        this.necessary = necessary;
     }
 
     public Set<PropPatternEntity> getProps() {
@@ -70,5 +68,12 @@ public class ElementPatternEntity implements java.io.Serializable{
 
     public void setProps(Set<PropPatternEntity> props) {
         this.props = props;
+    }
+    
+    public static Collection<INameableEntity> toCollection(
+            Collection<ElementPatternEntity> collection){
+        List<INameableEntity> listEntities = new ArrayList<>(); 
+        collection.forEach((ElementPatternEntity e) -> listEntities.add(e));
+        return listEntities;
     }
 }

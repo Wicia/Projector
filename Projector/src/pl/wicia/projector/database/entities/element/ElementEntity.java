@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import pl.wicia.projector.database.entities.INameableEntity;
 import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.entities.props.PropEntity;
 
@@ -20,7 +21,8 @@ import pl.wicia.projector.database.entities.props.PropEntity;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class ElementEntity implements java.io.Serializable{
+public class ElementEntity 
+        implements java.io.Serializable, INameableEntity<Long>{
 
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +37,7 @@ public class ElementEntity implements java.io.Serializable{
     
     public ElementEntity(){}
     
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -6,6 +6,7 @@
 
 package pl.wicia.projector.database.entities.description;
 
+import pl.wicia.projector.database.entities.INameableEntity;
 import pl.wicia.projector.database.entities.element.ElementEntity;
 import pl.wicia.projector.gui.windows.elements.data.elements.DescriptionTableRow;
 
@@ -15,7 +16,8 @@ import pl.wicia.projector.gui.windows.elements.data.elements.DescriptionTableRow
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class DescriptionEntity implements java.io.Serializable{
+public class DescriptionEntity 
+        implements java.io.Serializable, INameableEntity<Long>{
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +45,8 @@ public class DescriptionEntity implements java.io.Serializable{
         this.position = (byte)position;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
@@ -59,6 +62,7 @@ public class DescriptionEntity implements java.io.Serializable{
         this.position = position;
     }
 
+    @Override
     public String getName() {
         return name;
     }

@@ -6,8 +6,9 @@
 
 package pl.wicia.projector.database.entities.props;
 
+import pl.wicia.projector.database.entities.INameableEntity;
 import pl.wicia.projector.database.entities.element.ElementEntity;
-import pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity;
+import pl.wicia.projector.database.entities.patterns.props.PropPatternEntity;
 import pl.wicia.projector.gui.windows.elements.data.props.PropsTableRow;
 
 /**
@@ -16,7 +17,8 @@ import pl.wicia.projector.gui.windows.elements.data.props.PropsTableRow;
  * @TODO: Add descrptions to methods
  * @author Michał 'Wicia' Wietecha
  */
-public class PropEntity implements java.io.Serializable{
+public class PropEntity 
+        implements java.io.Serializable, INameableEntity<Long>{
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +34,13 @@ public class PropEntity implements java.io.Serializable{
         this.count = (byte) row.getCount();
     }
 
-    public long getId() {
+    public PropEntity(PropPatternEntity e) {
+        this.name = e.getName();
+        this.count = e.getCount();
+    }
+
+    @Override
+    public Long getId() {
         return id;
     }
 
@@ -40,6 +48,7 @@ public class PropEntity implements java.io.Serializable{
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
