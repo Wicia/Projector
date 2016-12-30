@@ -5,11 +5,9 @@
  */
 package pl.wicia.projector.main;
 
-import java.util.Set;
+import java.util.List;
 import javax.swing.UIManager;
-import pl.wicia.projector.database.entities.patterns.element.ElementPatternEntity;
-import pl.wicia.projector.database.entities.patterns.props.PropPatternEntity;
-import pl.wicia.projector.database.services.patterns.element.ElementPatternService;
+import pl.wicia.projector.gui.windows.menu.WindowMenu;
 import pl.wicia.projector.spring.contexts.ContextMain;
 import pl.wicia.projector.spring.contexts.ContextSettings;
 
@@ -26,10 +24,7 @@ public class Main {
     public static void main(String[] args) {
         initContexts();
         loadLookAndFeel();
-        //WindowMenu.open();
-        ElementPatternService s = ElementPatternService.getService();
-        ElementPatternEntity patternByID = s.getPatternByID(1L);
-        Set<PropPatternEntity> x = patternByID.getProps();
+        WindowMenu.open();
     }
     
     private static void loadLookAndFeel(){

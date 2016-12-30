@@ -32,52 +32,12 @@ public class PropsPatternDAO
     
     @Override
     public PropPatternEntity getByName(String name){
-        PropPatternEntity entity = null;
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findPropPatternByName");
-            createQuery.setString("name", name);
-            List<PropPatternEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+        return super.getByName(name, "name", "findPropPatternByName");
     }
 
     @Override
-    public PropPatternEntity get(Long id) {
-        PropPatternEntity entity = null;
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findPropPatternByID");
-            createQuery.setLong("id", id);
-            List<PropPatternEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+    public PropPatternEntity getByID(Long id) {
+        return super.get(id, "findPropPatternByID");
     }
 
     @Override

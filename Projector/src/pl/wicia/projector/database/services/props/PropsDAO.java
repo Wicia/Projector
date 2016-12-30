@@ -56,7 +56,7 @@ public class PropsDAO
     }
 
     @Override
-    public PropEntity get(Long id) {
+    public PropEntity getByID(Long id) {
         PropEntity entity = null;
         Session session = this.getSessionFactory().openSession();
         Transaction tx = null;

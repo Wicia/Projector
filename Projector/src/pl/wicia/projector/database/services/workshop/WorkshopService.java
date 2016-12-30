@@ -52,7 +52,7 @@ public class WorkshopService{
     }
     
     public WorkshopEntity getWorkshopByID(Long id){
-        return this.dao.get(id);
+        return this.dao.getByID(id);
     }
     
     public List<WorkshopEntity> getAllWorkshops(){

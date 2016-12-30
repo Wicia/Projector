@@ -47,7 +47,7 @@ public class ElementPatternService{
     }
     
     public ElementPatternEntity getPatternByID(Long id){
-        return this.dao.get(id);
+        return this.dao.getByID(id);
     }
     
     public List<ElementPatternEntity> getAllPatterns(Long id){

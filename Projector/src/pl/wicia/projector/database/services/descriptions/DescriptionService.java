@@ -38,7 +38,7 @@ public class DescriptionService{
     }
     
     public DescriptionEntity getDescriptionByID(Long id){
-        return this.dao.get(id);
+        return this.dao.getByID(id);
     }
     
     public List<DescriptionEntity> getAllDescriptions(Long id){

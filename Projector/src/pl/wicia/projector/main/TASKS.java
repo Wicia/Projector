@@ -15,11 +15,11 @@ package pl.wicia.projector.main;
 public class TASKS {
     
     private static class Critical{
-        //TODO: ServiceBase + mechanizm batchy
+        //TODO: ServiceBase
+        //TODO: kolejny poziom abstrakcji - zapytanie = co ma być wyonane w try catch z sesją i tranzakcją
         //TODO: Może do plików Entity zastosować wzorzec Dekorator?
         //TODO: dorobić mapowanie kolekcji do pozostałych klas entity
         //TODO: wykorzystać wrappery w serwisach
-        //TODO: dorobić obiekt BatchUpdater(index, size, session)
         //TODO: superklasa używająca JFRAME + mając obiekt do wyświetlania dialogów
         //TODO: Services/sprawdzić, czy metody update'ujące operują na małej ilości danych (nie ma wyciągania z bazy i update'u na dużej liczbie danych)
     }

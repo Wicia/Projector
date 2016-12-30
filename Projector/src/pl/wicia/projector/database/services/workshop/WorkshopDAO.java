@@ -32,52 +32,12 @@ public class WorkshopDAO
     
     @Override
     public WorkshopEntity getByName(String name){
-        WorkshopEntity entity = null;
-        Session session = super.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findWorkshopByName");
-            createQuery.setString("name", name);
-            List<WorkshopEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+        return super.getByName(name, "name", "findWorkshopByName");
     }
 
     @Override
-    public WorkshopEntity get(Long id) {
-        WorkshopEntity entity = null;
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findWorkshopByID");
-            createQuery.setLong("id", id);
-            List<WorkshopEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+    public WorkshopEntity getByID(Long id) {
+        return super.get(id, "findWorkshopByID");
     }
     
     @Override

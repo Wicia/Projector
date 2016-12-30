@@ -6,11 +6,7 @@
 package pl.wicia.projector.database.services.descriptions;
 
 import java.util.Collection;
-import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import pl.wicia.projector.database.entities.description.DescriptionEntity;
 import pl.wicia.projector.database.common.INameDAO;
 import pl.wicia.projector.database.services.common.Batcher;
@@ -31,57 +27,17 @@ public class DescriptionDAO
     }
 
     @Override
-    public DescriptionEntity get(Long id) {
-        DescriptionEntity entity = null;
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findDescriptionByID");
-            createQuery.setLong("id", id);
-            List<DescriptionEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+    public DescriptionEntity getByID(Long id) {
+        return super.get(id, "findDescriptionByID");
     }
 
     @Override
     public DescriptionEntity getByName(String name){
-        DescriptionEntity entity = null;
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findDescriptionByName");
-            createQuery.setString("name", name);
-            List<DescriptionEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+        return super.getByName(name, "name", "findDescriptionByName");
     }
 
     @Override
     public Collection<DescriptionEntity> searchByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

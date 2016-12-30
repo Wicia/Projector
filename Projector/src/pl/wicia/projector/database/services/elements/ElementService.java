@@ -46,7 +46,7 @@ public class ElementService{
     }
     
     public ElementEntity getElementByID(Long id){
-        return this.dao.get(id);
+        return this.dao.getByID(id);
     }
     
     public List<ElementEntity> getAllElements(Long id){

@@ -10,16 +10,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @param <TypeID>
- * @param <TypeElement>
- * @TODO: Add class description
- * @TODO: Add descrptions to fields
- * @TODO: Add descrptions to methods
+ * Interface defining functionallities for all DAO classes.
+ * 
+ * @param <TypeID> type of entity ID property
+ * @param <TypeElement> type of entity
+ * 
  * @author Michał 'Wicia' Wietecha
  */
 public interface IDataAccessObject<TypeID, TypeElement> {
+    
     // Single
-    public TypeElement get(TypeID id);
+    public TypeElement getByID(TypeID id);
     public void add(TypeElement element) throws Exception;
     public void update(TypeElement element);
     public void delete(TypeElement element);

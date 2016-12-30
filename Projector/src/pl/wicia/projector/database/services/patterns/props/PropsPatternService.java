@@ -44,7 +44,7 @@ public class PropsPatternService{
     }
     
     public PropPatternEntity getPropByID(Long id){
-        return this.dao.get(id);
+        return this.dao.getByID(id);
     }
     
     public List<PropPatternEntity> getAllProps(){

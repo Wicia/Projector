@@ -44,7 +44,7 @@ public class PropsService{
     }
     
     public PropEntity getPropByID(Long id){
-        return this.dao.get(id);
+        return this.dao.getByID(id);
     }
     
     public List<PropEntity> getAllProps(){

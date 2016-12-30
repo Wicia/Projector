@@ -31,57 +31,17 @@ public class ElementPatternDAO
     }
 
     @Override
-    public ElementPatternEntity get(Long id) {
-        ElementPatternEntity entity = null;
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findElementPatternByID");
-            createQuery.setLong("id", id);
-            List<ElementPatternEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+    public ElementPatternEntity getByID(Long id) {
+        return super.get(id, "findElementPatternByID");
     }
 
     @Override
     public ElementPatternEntity getByName(String name){
-        ElementPatternEntity entity = null;
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Query createQuery = session.getNamedQuery("findElementPatternByName");
-            createQuery.setString("name", name);
-            List<ElementPatternEntity> list = createQuery.list();
-            if(list != null && !list.isEmpty())
-                entity = list.get(0);
-            tx.commit();
-        } 
-        catch (Exception ex) {
-            if (tx != null)
-                tx.rollback();
-        } 
-        finally {
-            session.close();
-        }
-        
-        return entity;
+        return super.getByName(name, "name", "findElementPatternByName");
     }
 
     @Override
     public Collection<ElementPatternEntity> searchByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
